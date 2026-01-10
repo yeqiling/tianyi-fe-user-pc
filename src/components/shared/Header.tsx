@@ -29,10 +29,17 @@ export default function Header() {
 
   return (
     <header 
-      className="fixed top-0 left-0 right-0 bg-white flex justify-between items-center"
       style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         padding: '10px 20px',
+        backgroundColor: '#fff',
         boxShadow: '0 1px 5px rgba(0, 0, 0, 0.05)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
         zIndex: 999,
         fontFamily: '"Microsoft YaHei", sans-serif'
       }}
@@ -48,18 +55,21 @@ export default function Header() {
 
       {/* Navigation Menu */}
       {activeNav !== 3 && activeNav !== 4 && (
-        <nav className="flex" style={{ gap: '20px' }}>
+        <nav style={{ display: 'flex', gap: '20px' }}>
           {tabs.map((tab, index) => (
             <button
               key={index}
               onClick={() => handleTabClick(index)}
-              className="bg-transparent border-none cursor-pointer transition-colors"
               style={{
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
                 fontSize: '14px',
                 color: activeNav === index ? '#000000' : '#333',
                 fontWeight: activeNav === index ? 'bold' : 'normal',
                 borderBottom: activeNav === index ? '2px solid #000000' : 'none',
-                paddingBottom: '2px'
+                paddingBottom: '2px',
+                transition: 'color 0.2s'
               }}
             >
               {tab.name}
@@ -69,9 +79,9 @@ export default function Header() {
       )}
 
       {/* Auth Buttons */}
-      <div className="flex items-center" style={{ gap: '10px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         {/* Language Picker */}
-        <div className="relative flex items-center" style={{ gap: '4px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <img 
             src="/images/lan.png" 
             alt="language" 
@@ -80,8 +90,13 @@ export default function Header() {
           <select
             value={currentIndex}
             onChange={handleLanguageChange}
-            className="bg-transparent border-none cursor-pointer"
-            style={{ fontSize: '16px', color: '#333' }}
+            style={{ 
+              background: 'transparent', 
+              border: 'none', 
+              cursor: 'pointer',
+              fontSize: '16px', 
+              color: '#333' 
+            }}
           >
             {languages.map((lang, index) => (
               <option key={lang.code} value={index}>
@@ -98,8 +113,10 @@ export default function Header() {
 
         <button
           onClick={() => handleLogin('register')}
-          className="bg-transparent border-none cursor-pointer"
           style={{
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
             color: '#000000',
             fontSize: '14px',
             padding: '0 15px',
@@ -112,14 +129,16 @@ export default function Header() {
 
         <button
           onClick={() => handleLogin('login')}
-          className="text-white border-none cursor-pointer"
           style={{
             width: '67px',
             height: '30px',
             lineHeight: '30px',
             fontSize: '14px',
             backgroundColor: '#5f5f5f',
-            borderRadius: '4px'
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
           }}
         >
           {loginText.login}

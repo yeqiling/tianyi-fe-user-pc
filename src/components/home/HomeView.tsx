@@ -43,85 +43,180 @@ export default function HomeView() {
   return (
     <div>
       {/* 主视觉区域 */}
-      <section className="relative overflow-hidden text-center bg-gray-50" style={{ marginTop: '65px' }}>
+      <section 
+        style={{
+          position: 'relative',
+          overflow: 'hidden',
+          textAlign: 'center',
+          marginTop: '65px',
+          background: '#f9fafb'
+        }}
+      >
         {/* Hero Content */}
-        <div className="h-52 flex flex-col items-center justify-center z-10 mx-auto" style={{ maxWidth: '400px' }}>
+        <div 
+          style={{
+            height: '210px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2,
+            margin: '0 auto',
+            maxWidth: '400px'
+          }}
+        >
           <img 
-            className="mb-6" 
             src="/images/home_text.png" 
             alt="主标题"
-            style={{ width: '644px', height: '60px' }}
+            style={{ 
+              width: '644px', 
+              height: '60px',
+              marginBottom: '24px'
+            }}
           />
-          <p className="text-gray-600 mb-10 leading-relaxed" style={{ fontSize: '16px', marginBottom: '20px' }}>
+          <p 
+            style={{ 
+              fontSize: '16px', 
+              color: '#666',
+              marginBottom: '20px',
+              lineHeight: 1.6
+            }}
+          >
             {texts.subtitle}
           </p>
           <button 
-            className="font-medium text-white bg-gray-600 hover:bg-blue-700 transition-colors border-none cursor-pointer"
             style={{
               width: '132px',
               height: '52px',
+              lineHeight: '52px',
+              fontWeight: '500',
               fontSize: '18px',
+              color: '#FFFFFF',
               background: '#5F5F5F',
               boxShadow: '0px 6px 12px 1px rgba(0, 0, 0, 0.16)',
-              borderRadius: '26px'
+              borderRadius: '26px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'background-color 0.2s'
             }}
             onClick={handleLogin}
+            onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#005bb5'}
+            onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#5F5F5F'}
           >
             {texts.tryNow}
           </button>
         </div>
         
         {/* Background Image */}
-        <div className="left-0 right-0 bottom-0 z-0 overflow-hidden">
+        <div 
+          style={{
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1,
+            overflow: 'hidden'
+          }}
+        >
           <img 
             src="/images/home_bg.png" 
             alt="背景" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        {/* 命书区域 */}
-        <div className="bg-gray-50" style={{ padding: '40px 0' }}>
-          <img 
-            className="mx-auto" 
-            src="/images/ms_c.png" 
-            alt="命书"
-            style={{ width: '800px', height: '417px' }}
-          />
-        </div>
-        
-        {/* 易经区域 */}
-        <div className="bg-white" style={{ padding: '40px 0' }}>
-          <img 
-            className="mx-auto" 
-            src="/images/yg_c.png" 
-            alt="易经"
-            style={{ width: '800px', height: '417px' }}
-          />
-        </div>
-        
-        {/* 立即体验按钮 */}
-        <div className="bg-white" style={{ padding: '40px 0' }}>
-          <button 
-            className="mx-auto block font-medium text-white bg-gray-600 hover:bg-blue-700 transition-colors border-none cursor-pointer"
             style={{
-              width: '200px',
-              height: '52px',
-              fontSize: '18px',
-              background: '#5F5F5F',
-              boxShadow: '0px 6px 12px 1px rgba(0, 0, 0, 0.16)',
-              borderRadius: '26px'
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
             }}
-            onClick={handleLogin}
-          >
-            {texts.tryNowLarge}
-          </button>
+          />
         </div>
       </section>
+        
+      {/* 命书区域 */}
+      <div 
+        style={{ 
+          padding: '40px 0',
+          background: '#f9fafb'
+        }}
+      >
+        <img 
+          src="/images/ms_c.png" 
+          alt="命书"
+          style={{ 
+            width: '800px', 
+            height: '417px',
+            display: 'block',
+            margin: '0 auto'
+          }}
+        />
+      </div>
+      
+      {/* 易经区域 */}
+      <div 
+        style={{ 
+          padding: '40px 0',
+          background: 'white'
+        }}
+      >
+        <img 
+          src="/images/yg_c.png" 
+          alt="易经"
+          style={{ 
+            width: '800px', 
+            height: '417px',
+            display: 'block',
+            margin: '0 auto'
+          }}
+        />
+      </div>
+      
+      {/* 立即体验按钮 */}
+      <div 
+        style={{ 
+          padding: '40px 0',
+          background: 'white'
+        }}
+      >
+        <button 
+          style={{
+            width: '200px',
+            height: '52px',
+            lineHeight: '52px',
+            margin: '0 auto',
+            fontWeight: '500',
+            fontSize: '18px',
+            color: '#ffffff',
+            background: '#5f5f5f',
+            boxShadow: '0px 6px 12px 1px rgba(0, 0, 0, 0.16)',
+            borderRadius: '26px',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'block',
+            transition: 'background-color 0.2s'
+          }}
+          onClick={handleLogin}
+          onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#005bb5'}
+          onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#5f5f5f'}
+        >
+          {texts.tryNowLarge}
+        </button>
+      </div>
 
       {/* 底部版权区 */}
-      <footer className="bg-black text-white" style={{ padding: '30px 20px 20px', marginTop: '30px' }}>
-        <div className="flex justify-between items-start mb-15" style={{ gap: '30px', marginBottom: '30px' }}>
+      <footer 
+        style={{
+          backgroundColor: '#000',
+          color: '#fff',
+          padding: '30px 20px 20px',
+          marginTop: '30px'
+        }}
+      >
+        <div 
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            gap: '30px',
+            marginBottom: '30px'
+          }}
+        >
           <div>
             <img 
               src="/images/icon_logo_bg.png" 
@@ -131,33 +226,41 @@ export default function HomeView() {
           </div>
           
           <div>
-            <h3 className="mb-5" style={{ fontSize: '16px', marginBottom: '10px' }}>{texts.contact}</h3>
-            <p className="text-gray-300 mb-2" style={{ fontSize: '14px', color: '#ccc', marginBottom: '5px' }}>
+            <h3 style={{ fontSize: '16px', marginBottom: '10px' }}>{texts.contact}</h3>
+            <p style={{ fontSize: '14px', color: '#ccc', marginBottom: '5px' }}>
               {texts.email}
             </p>
-            <p className="text-gray-300" style={{ fontSize: '14px', color: '#ccc' }}>
+            <p style={{ fontSize: '14px', color: '#ccc' }}>
               {texts.address}
             </p>
           </div>
           
           <div>
-            <h3 className="mb-5 text-right" style={{ fontSize: '16px', marginBottom: '10px' }}>{texts.customerService}</h3>
-            <div className="flex" style={{ gap: '20px' }}>
-              <div className="flex flex-col items-center" style={{ gap: '5px' }}>
+            <h3 style={{ fontSize: '16px', marginBottom: '10px', textAlign: 'right' }}>{texts.customerService}</h3>
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
                 <img 
                   src="/images/21.png" 
                   alt="芷暄师妹" 
-                  className="rounded bg-white"
-                  style={{ width: '80px', height: '80px', borderRadius: '4px' }}
+                  style={{ 
+                    width: '80px', 
+                    height: '80px', 
+                    borderRadius: '4px',
+                    backgroundColor: '#fff'
+                  }}
                 />
                 <span style={{ fontSize: '12px', color: '#ccc', marginTop: '5px' }}>芷暄师妹</span>
               </div>
-              <div className="flex flex-col items-center" style={{ gap: '5px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
                 <img 
                   src="/images/22.png" 
                   alt="丁火师妹" 
-                  className="rounded bg-white"
-                  style={{ width: '80px', height: '80px', borderRadius: '4px' }}
+                  style={{ 
+                    width: '80px', 
+                    height: '80px', 
+                    borderRadius: '4px',
+                    backgroundColor: '#fff'
+                  }}
                 />
                 <span style={{ fontSize: '12px', color: '#ccc', marginTop: '5px' }}>丁火师妹</span>
               </div>
@@ -165,15 +268,37 @@ export default function HomeView() {
           </div>
         </div>
         
-        <div className="flex justify-between items-center border-t border-gray-700" style={{ paddingTop: '15px', fontSize: '12px', color: '#999', borderTopColor: '#333' }}>
+        <div 
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderTop: '1px solid #333',
+            paddingTop: '15px',
+            fontSize: '12px',
+            color: '#999'
+          }}
+        >
           <div>
             <div>{texts.copyright}</div>
             <div>{texts.icp}</div>
           </div>
           
-          <div className="flex" style={{ gap: '15px' }}>
-            <span className="cursor-pointer hover:text-white">{texts.privacy}</span>
-            <span className="cursor-pointer hover:text-white">{texts.terms}</span>
+          <div style={{ display: 'flex', gap: '15px' }}>
+            <span 
+              style={{ cursor: 'pointer' }}
+              onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#fff'}
+              onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#999'}
+            >
+              {texts.privacy}
+            </span>
+            <span 
+              style={{ cursor: 'pointer' }}
+              onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#fff'}
+              onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#999'}
+            >
+              {texts.terms}
+            </span>
           </div>
         </div>
       </footer>
