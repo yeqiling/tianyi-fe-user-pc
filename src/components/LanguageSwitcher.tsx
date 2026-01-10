@@ -1,28 +1,32 @@
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { useStore } from '@tanstack/react-store'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { appStore, appActions } from '@/stores'
+
+const languages = [
+  { code: 'zh-CN', name: '中文' },
+  { code: 'en-US', name: 'English' }
+]
 
 export function LanguageSwitcher() {
-  const { i18n, t } = useTranslation();
+  const { currentLanguage } = useStore(appStore)
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
+  const handleLanguageChange = (language: string) => {
+    appActions.setLanguage(language)
+  }
 
   return (
-    <div>
-      <span>{t('language')}: </span>
-      <button 
-        onClick={() => changeLanguage('en')}
-        className={i18n.language === 'en' ? 'font-bold' : ''}
-      >
-        EN
-      </button>
-      {' | '}
-      <button 
-        onClick={() => changeLanguage('zh')}
-        className={i18n.language === 'zh' ? 'font-bold' : ''}
-      >
-        中文
-      </button>
-    </div>
-  );
+    <Select value={currentLanguage} onValueChange={handleLanguageChange}>
+      <SelectTrigger className="w-32">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {languages.map((lang) => (
+          <SelectItem key={lang.code} value={lang.code}>
+            {lang.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
 }

@@ -1,22 +1,26 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import zhCN from './locales/zh-CN'
+import enUS from './locales/en-US'
 
-import en from './locales/en.json';
-import zh from './locales/zh.json';
+export const messages = {
+  'zh-CN': zhCN,
+  'en-US': enUS
+}
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en: { translation: en },
-      zh: { translation: zh }
-    },
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false
-    }
-  });
+export const defaultLocale = 'zh-CN'
 
-export default i18n;
+export function getI18nText(key: string, locale: string = defaultLocale) {
+  const keys = key.split('.')
+  let text: any = messages[locale as keyof typeof messages]
+  
+  for (const k of keys) {
+    text = text?.[k]
+  }
+  
+  return text || key
+}
+
+export const useI18n = (locale: string = defaultLocale) => {
+  return {
+    t: (key: string) => getI18nText(key, locale)
+  }
+}
