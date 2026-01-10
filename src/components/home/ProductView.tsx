@@ -4,7 +4,7 @@ import { setActiveNav } from '../../stores/navigationStore'
 
 const productTexts = {
   'zh-CN': {
-    subtitle: '专业的命理服务,为您提供全方位的人生指导',
+    subtitle: '专业的命理服务，为您提供全方位的人生指导',
     products: [
       { id: 1, title: '产品定价', image: 'cp.png' },
       { id: 2, title: '八字命理报告-命书', image: 'ms.png' },
@@ -34,28 +34,35 @@ export default function ProductView() {
   const texts = productTexts[currentLanguage]
 
   return (
-    <div className="pt-[65px] h-full font-['Microsoft_YaHei',sans-serif] bg-[#f9fafb]">
-      {/* 主内容区 */}
-      <div className="p-5 pb-[200px] min-h-screen">
-        {/* 标题区域 */}
-        <div className="text-center mb-[30px]">
-          <img src="/images/cpfw.png" alt="" className="w-[200px] h-[57px] mb-[26px] mx-auto" />
-          <p className="font-normal text-[20px] text-[#4b5462]">{texts.subtitle}</p>
+    <div style={{ paddingTop: '65px', height: '100%', fontFamily: '"Microsoft YaHei", sans-serif', backgroundColor: '#f9fafb' }}>
+      <div style={{ padding: '20px', paddingBottom: '200px', minHeight: '100vh' }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <img src="/images/cpfw.png" alt="" style={{ width: '200px', height: '57px', marginBottom: '26px', marginLeft: 'auto', marginRight: 'auto', display: 'block' }} />
+          <p style={{ fontWeight: 400, fontSize: '20px', color: '#4b5462' }}>{texts.subtitle}</p>
         </div>
 
-        {/* 产品区域 */}
-        <div className="flex items-center max-w-[1160px] mx-auto">
-          <div className="flex flex-wrap w-full justify-start">
+        <div style={{ display: 'flex', alignItems: 'center', maxWidth: '1160px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' }}>
             {texts.products.map((product) => (
               <div
                 key={product.id}
-                className="w-[30%] mt-5 ml-5 bg-white rounded-lg overflow-hidden shadow-[0_2px_6px_rgba(0,0,0,0.05)] transition-transform duration-200 cursor-pointer flex-[0_0_auto]"
+                style={{
+                  width: '30%',
+                  margin: '20px 0 0 20px',
+                  backgroundColor: '#fff',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05)',
+                  transition: 'transform 0.2s',
+                  cursor: 'pointer',
+                  flex: '0 0 auto'
+                }}
                 onClick={() => setActiveNav(4)}
               >
-                <div className="w-full h-[250px] relative overflow-hidden">
-                  <img src={`/images/${product.image}`} alt="" className="w-full h-full object-cover" />
+                <div style={{ width: '100%', height: '250px', position: 'relative', overflow: 'hidden' }}>
+                  <img src={`/images/${product.image}`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <div className="h-[72px] leading-[72px] text-center text-[14px] font-bold text-[#333]">
+                <div style={{ height: '72px', lineHeight: '72px', fontSize: '14px', color: '#333', textAlign: 'center', fontWeight: 'bold' }}>
                   {product.title}
                 </div>
               </div>
@@ -64,23 +71,22 @@ export default function ProductView() {
         </div>
       </div>
 
-      {/* 底部版权区 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white px-5 py-0">
-        <div className="flex justify-between items-start gap-[30px] mb-[30px]">
-          <div className="mt-[53px]">
-            <img src="/images/icon_logo_black.png" alt="" className="h-[34px] w-[134px] ml-[110px]" />
-            <div className="mt-4 ml-[110px] font-normal text-[18px] text-[#4b5462]">{texts.copyright}</div>
+      <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, backgroundColor: '#ffffff', color: '#fff', padding: '0 20px 0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '30px', marginBottom: '30px' }}>
+          <div style={{ marginTop: '53px' }}>
+            <img src="/images/icon_logo_black.png" alt="" style={{ height: '34px', width: '134px', marginLeft: '110px' }} />
+            <div style={{ margin: '16px 0 0 110px', fontWeight: 400, fontSize: '18px', color: '#4b5462' }}>{texts.copyright}</div>
           </div>
           
           <div>
-            <h3 className="text-center mt-[10px]">
-              <img src="/images/xjt.png" alt="" className="w-5 h-[10px]" />
+            <h3 style={{ textAlign: 'center', marginTop: '10px' }}>
+              <img src="/images/xjt.png" alt="" style={{ width: '20px', height: '10px' }} />
             </h3>
-            <div className="flex gap-5">
+            <div style={{ display: 'flex', gap: '20px' }}>
               {['21.png', '22.png'].map((image, index) => (
-                <div key={index} className="flex flex-col items-center gap-[5px]">
-                  <img src={`/images/${image}`} alt="" className="w-20 h-20 rounded bg-white" />
-                  <span className="text-[12px] text-[#ccc] mt-[5px]">{texts.qrLabels[index]}</span>
+                <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
+                  <img src={`/images/${image}`} alt="" style={{ width: '80px', height: '80px', borderRadius: '4px', backgroundColor: '#fff' }} />
+                  <span style={{ fontSize: '12px', color: '#ccc', marginTop: '5px' }}>{texts.qrLabels[index]}</span>
                 </div>
               ))}
             </div>
