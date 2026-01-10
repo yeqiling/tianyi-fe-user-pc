@@ -51,14 +51,13 @@ export default function ProductView({ onProductClick }: ProductViewProps) {
       {/* 主内容区 */}
       <div style={{ padding: '20px', paddingBottom: '200px', minHeight: '100vh' }}>
         {/* 标题区域 */}
-        <div className="text-center" style={{ marginBottom: '30px' }}>
+        <div className="text-center mb-[30px]">
           <img 
             src="/images/cpfw.png" 
             alt="产品服务"
-            className="w-[200px] h-[57px]"
-            style={{ marginBottom: '26px' }}
+            className="w-[200px] h-[57px] mb-[26px] mx-auto"
           />
-          <p style={{ fontWeight: 400, fontSize: '20px', color: '#4b5462' }}>
+          <p className="font-normal text-xl text-[#4b5462]">
             {texts.subtitle}
           </p>
         </div>
@@ -136,7 +135,7 @@ interface FooterProps {
 
 function Footer({ texts }: FooterProps) {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-white px-10 py-0">
+    <footer className="fixed bottom-0 left-0 right-0 bg-white px-5 py-0">
       <div className="flex justify-between items-start gap-[30px] mb-[30px]">
         <div className="mt-[53px]">
           <img 
@@ -157,7 +156,7 @@ function Footer({ texts }: FooterProps) {
               className="w-5 h-[10px]"
             />
           </h3>
-          <div className="flex gap-10 mt-[10px]">
+          <div className="flex gap-[20px]">
             {['21.png', '22.png'].map((image, index) => (
               <QRCode
                 key={index}
@@ -184,7 +183,7 @@ function QRCode({ image, label }: QRCodeProps) {
       <img 
         src={`/images/${image}`}
         alt={label}
-        className="w-20 h-20 rounded-lg bg-white"
+        className="w-20 h-20 rounded-[4px] bg-white"
       />
       <span className="text-xs text-[#ccc] mt-[5px]">{label}</span>
     </div>
