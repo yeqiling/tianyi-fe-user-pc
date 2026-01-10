@@ -47,24 +47,25 @@ export default function ProductView({ onProductClick }: ProductViewProps) {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-[65px] font-['Microsoft_YaHei',sans-serif]">
+    <div className="bg-gray-50 min-h-screen font-['Microsoft_YaHei',sans-serif]" style={{ paddingTop: '65px' }}>
       {/* 主内容区 */}
-      <div className="px-5 pb-[200px] min-h-screen">
+      <div style={{ padding: '20px', paddingBottom: '200px', minHeight: '100vh' }}>
         {/* 标题区域 */}
-        <div className="text-center mb-[30px]">
+        <div className="text-center" style={{ marginBottom: '30px' }}>
           <img 
             src="/images/cpfw.png" 
             alt="产品服务"
-            className="w-[200px] h-[57px] mb-[26px] mx-auto"
+            className="w-[200px] h-[57px]"
+            style={{ marginBottom: '26px' }}
           />
-          <p className="font-normal text-xl text-[#4b5462]">
+          <p style={{ fontWeight: 400, fontSize: '20px', color: '#4b5462' }}>
             {texts.subtitle}
           </p>
         </div>
 
         {/* 产品网格 */}
-        <div className="flex items-center max-w-[1160px] mx-auto">
-          <div className="flex flex-wrap justify-start w-full">
+        <div style={{ display: 'flex', alignItems: 'center', maxWidth: '1160px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' }}>
             {texts.products.map((product) => (
               <ProductCard
                 key={product.id}
@@ -91,23 +92,34 @@ interface ProductCardProps {
 function ProductCard({ product, onClick }: ProductCardProps) {
   return (
     <div
-      className="w-[30%] bg-white overflow-hidden cursor-pointer 
-                 transition-transform hover:-translate-y-1 shadow-[0_4px_12px_rgba(0,0,0,0.05)]
-                 flex-[0_0_auto]"
       style={{
+        width: '30%',
         margin: '20px 0 0 20px',
-        borderRadius: '8px'
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+        transition: 'transform 0.2s',
+        cursor: 'pointer',
+        flex: '0 0 auto'
       }}
       onClick={onClick}
     >
-      <div className="w-full h-[250px] relative overflow-hidden">
+      <div style={{ width: '100%', height: '250px', position: 'relative', overflow: 'hidden' }}>
         <img 
           src={`/images/${product.image}`}
           alt={product.title}
-          className="w-full h-full object-cover"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
-      <div className="h-[72px] leading-[72px] text-center text-[14px] font-bold text-[#333]">
+      <div style={{ 
+        height: '72px', 
+        lineHeight: '72px', 
+        textAlign: 'center', 
+        fontSize: '14px', 
+        fontWeight: 'bold', 
+        color: '#333' 
+      }}>
         {product.title}
       </div>
     </div>
