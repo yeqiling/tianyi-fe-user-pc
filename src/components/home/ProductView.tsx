@@ -35,12 +35,15 @@ export default function ProductView() {
 
   return (
     <div className="pt-[65px] h-full font-['Microsoft_YaHei',sans-serif] bg-[#f9fafb]">
+      {/* 主内容区 */}
       <div className="p-5 pb-[200px] min-h-screen">
+        {/* 标题区域 */}
         <div className="text-center mb-[30px]">
-          <img src="/images/cpfw.png" alt="产品服务" className="w-[200px] h-[57px] mb-[26px] mx-auto" />
+          <img src="/images/cpfw.png" alt="" className="w-[200px] h-[57px] mb-[26px] mx-auto" />
           <p className="font-normal text-[20px] text-[#4b5462]">{texts.subtitle}</p>
         </div>
 
+        {/* 产品区域 */}
         <div className="flex items-center max-w-[1160px] mx-auto">
           <div className="flex flex-wrap w-full justify-start">
             {texts.products.map((product) => (
@@ -50,7 +53,7 @@ export default function ProductView() {
                 onClick={() => setActiveNav(4)}
               >
                 <div className="w-full h-[250px] relative overflow-hidden">
-                  <img src={`/images/${product.image}`} alt={product.title} className="w-full h-full object-cover" />
+                  <img src={`/images/${product.image}`} alt="" className="w-full h-full object-cover" />
                 </div>
                 <div className="h-[72px] leading-[72px] text-center text-[14px] font-bold text-[#333]">
                   {product.title}
@@ -61,28 +64,29 @@ export default function ProductView() {
         </div>
       </div>
 
-      <footer className="fixed bottom-0 left-0 right-0 bg-white px-5 py-0">
+      {/* 底部版权区 */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white px-5 py-0">
         <div className="flex justify-between items-start gap-[30px] mb-[30px]">
           <div className="mt-[53px]">
-            <img src="/images/icon_logo_black.png" alt="Logo" className="h-[34px] w-[134px] ml-[110px]" />
+            <img src="/images/icon_logo_black.png" alt="" className="h-[34px] w-[134px] ml-[110px]" />
             <div className="mt-4 ml-[110px] font-normal text-[18px] text-[#4b5462]">{texts.copyright}</div>
           </div>
           
           <div>
             <h3 className="text-center mt-[10px]">
-              <img src="/images/xjt.png" alt="客服" className="w-5 h-[10px]" />
+              <img src="/images/xjt.png" alt="" className="w-5 h-[10px]" />
             </h3>
             <div className="flex gap-5">
               {['21.png', '22.png'].map((image, index) => (
                 <div key={index} className="flex flex-col items-center gap-[5px]">
-                  <img src={`/images/${image}`} alt={texts.qrLabels[index]} className="w-20 h-20 rounded bg-white" />
+                  <img src={`/images/${image}`} alt="" className="w-20 h-20 rounded bg-white" />
                   <span className="text-[12px] text-[#ccc] mt-[5px]">{texts.qrLabels[index]}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </footer>
+      </div>
     </div>
   )
 }
