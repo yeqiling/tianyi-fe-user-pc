@@ -79,7 +79,7 @@ export default function ProductView() {
           </div>
           
           <div>
-            <h3 style={{ textAlign: 'center', marginTop: '10px' }}>
+            <h3 style={{ fontSize: '16px', marginBottom: '10px', textAlign: 'center', marginTop: '10px' }}>
               <img src="/images/xjt.png" alt="" style={{ width: '20px', height: '10px' }} />
             </h3>
             <div style={{ display: 'flex', gap: '20px' }}>
