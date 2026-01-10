@@ -1,14 +1,16 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { Outlet, createRootRoute, redirect } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import { LanguageSwitcher } from '../components/LanguageSwitcher'
 
 export const Route = createRootRoute({
+  beforeLoad: ({ location }) => {
+    // 如果访问根路径，重定向到首页
+    if (location.pathname === '/') {
+      throw redirect({ to: '/home' })
+    }
+  },
   component: () => (
     <>
-      <header className="p-4 border-b">
-        <LanguageSwitcher />
-      </header>
       <Outlet />
       <TanStackDevtools
         config={{

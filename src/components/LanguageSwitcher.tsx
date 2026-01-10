@@ -1,4 +1,3 @@
-import React from 'react'
 import { useStore } from '@tanstack/react-store'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { appStore, appActions } from '@/stores'

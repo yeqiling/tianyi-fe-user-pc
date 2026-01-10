@@ -30,25 +30,25 @@ class ApiService {
   }
 
   // 用户相关API
-  async login(phone: string, code: string) {
+  async login(phone: string, code: string): Promise<{ token?: string; user: any }> {
     return this.request('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ phone, code })
     })
   }
 
-  async sendVerifyCode(phone: string) {
+  async sendVerifyCode(phone: string): Promise<{ success: boolean }> {
     return this.request('/auth/send-code', {
       method: 'POST',
       body: JSON.stringify({ phone })
     })
   }
 
-  async getUserInfo() {
+  async getUserInfo(): Promise<any> {
     return this.request('/user/info')
   }
 
-  async updateUserInfo(data: any) {
+  async updateUserInfo(data: any): Promise<{ user: any }> {
     return this.request('/user/update', {
       method: 'PUT',
       body: JSON.stringify(data)
