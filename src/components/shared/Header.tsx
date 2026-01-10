@@ -1,10 +1,13 @@
 import { useStore } from '@tanstack/react-store'
-import { navigationStore, setActiveNav, setLanguage } from '../../stores/navigationStore'
+import { navigationStore, setActiveNav } from '../../stores/navigationStore'
+import { languageStore, setLanguage as setLang } from '../../stores/languageStore'
 import { languages, navigationTabs, loginTexts } from '../../constants/navigation'
 
 export default function Header() {
-  const { activeNav, currentLanguageIndex } = useStore(navigationStore)
-  const currentLanguage = languages[currentLanguageIndex].code as keyof typeof navigationTabs
+  const { activeNav } = useStore(navigationStore)
+  const { currentLanguage } = useStore(languageStore)
+  
+  const currentIndex = languages.findIndex(lang => lang.code === currentLanguage)
   const tabs = navigationTabs[currentLanguage]
   const loginText = loginTexts[currentLanguage]
 
@@ -14,8 +17,8 @@ export default function Header() {
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const index = Number(e.target.value)
-    setLanguage(index)
-    // TODO: 实现语言切换逻辑
+    const selectedLanguage = languages[index].code as 'zh-CN' | 'en-US'
+    setLang(selectedLanguage)
   }
 
   const handleLogin = (type: 'login' | 'register') => {
@@ -74,7 +77,7 @@ export default function Header() {
             style={{ width: '24px', height: '24px' }}
           />
           <select
-            value={currentLanguageIndex}
+            value={currentIndex}
             onChange={handleLanguageChange}
             className="bg-transparent border-none cursor-pointer"
             style={{ fontSize: '16px', color: '#333' }}

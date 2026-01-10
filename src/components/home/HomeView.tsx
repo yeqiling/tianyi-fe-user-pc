@@ -1,4 +1,39 @@
+import { useStore } from '@tanstack/react-store'
+import { languageStore } from '../../stores/languageStore'
+
+const homeTexts = {
+  'zh-CN': {
+    subtitle: '召唤AI老法师，开启实时对话',
+    tryNow: '马上体验',
+    tryNowLarge: '立即体验',
+    contact: '联系我们',
+    email: '邮箱：service@klxtech.com',
+    address: '地址：上海市闵行区申滨路36号丽宝广场',
+    customerService: '客服入口',
+    copyright: '© 2025 昆仑墟（上海）网络科技有限公司 版权所有',
+    icp: '沪ICP备2025131650号-2',
+    privacy: '隐私政策',
+    terms: '用户协议'
+  },
+  'en-US': {
+    subtitle: 'Summon AI Master, Start Real-time Conversation',
+    tryNow: 'Try Now',
+    tryNowLarge: 'Try Now',
+    contact: 'Contact Us',
+    email: 'Email: service@klxtech.com',
+    address: 'Address: 36 Shenbin Road, Minhang District, Shanghai',
+    customerService: 'Customer Service',
+    copyright: '© 2025 Kunlunxu (Shanghai) Network Technology Co., Ltd. All rights reserved',
+    icp: 'ICP: 2025131650-2',
+    privacy: 'Privacy Policy',
+    terms: 'Terms of Service'
+  }
+}
+
 export default function HomeView() {
+  const { currentLanguage } = useStore(languageStore)
+  const texts = homeTexts[currentLanguage]
+
   const handleLogin = () => {
     // TODO: 实现登录跳转逻辑
     console.log('Navigate to login')
@@ -17,7 +52,7 @@ export default function HomeView() {
             style={{ width: '644px', height: '60px' }}
           />
           <p className="text-gray-600 mb-10 leading-relaxed" style={{ fontSize: '16px', marginBottom: '20px' }}>
-            召唤AI老法师，开启实时对话
+            {texts.subtitle}
           </p>
           <button 
             className="font-medium text-white bg-gray-600 hover:bg-blue-700 transition-colors border-none cursor-pointer"
@@ -31,7 +66,7 @@ export default function HomeView() {
             }}
             onClick={handleLogin}
           >
-            马上体验
+            {texts.tryNow}
           </button>
         </div>
         
@@ -78,7 +113,7 @@ export default function HomeView() {
             }}
             onClick={handleLogin}
           >
-            立即体验
+            {texts.tryNowLarge}
           </button>
         </div>
       </section>
@@ -95,17 +130,17 @@ export default function HomeView() {
           </div>
           
           <div>
-            <h3 className="mb-5" style={{ fontSize: '16px', marginBottom: '10px' }}>联系我们</h3>
+            <h3 className="mb-5" style={{ fontSize: '16px', marginBottom: '10px' }}>{texts.contact}</h3>
             <p className="text-gray-300 mb-2" style={{ fontSize: '14px', color: '#ccc', marginBottom: '5px' }}>
-              邮箱：service@klxtech.com
+              {texts.email}
             </p>
             <p className="text-gray-300" style={{ fontSize: '14px', color: '#ccc' }}>
-              地址：上海市闵行区申滨路36号丽宝广场
+              {texts.address}
             </p>
           </div>
           
           <div>
-            <h3 className="mb-5 text-right" style={{ fontSize: '16px', marginBottom: '10px' }}>客服入口</h3>
+            <h3 className="mb-5 text-right" style={{ fontSize: '16px', marginBottom: '10px' }}>{texts.customerService}</h3>
             <div className="flex" style={{ gap: '20px' }}>
               <div className="flex flex-col items-center" style={{ gap: '5px' }}>
                 <img 
@@ -131,13 +166,13 @@ export default function HomeView() {
         
         <div className="flex justify-between items-center border-t border-gray-700" style={{ paddingTop: '15px', fontSize: '12px', color: '#999', borderTopColor: '#333' }}>
           <div>
-            <div>© 2025 昆仑墟（上海）网络科技有限公司 版权所有</div>
-            <div>沪ICP备2025131650号-2</div>
+            <div>{texts.copyright}</div>
+            <div>{texts.icp}</div>
           </div>
           
           <div className="flex" style={{ gap: '15px' }}>
-            <span className="cursor-pointer hover:text-white">隐私政策</span>
-            <span className="cursor-pointer hover:text-white">用户协议</span>
+            <span className="cursor-pointer hover:text-white">{texts.privacy}</span>
+            <span className="cursor-pointer hover:text-white">{texts.terms}</span>
           </div>
         </div>
       </footer>
