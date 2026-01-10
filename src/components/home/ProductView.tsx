@@ -49,7 +49,7 @@ export default function ProductView({ onProductClick }: ProductViewProps) {
   return (
     <div className="bg-gray-50 min-h-screen pt-[65px] font-['Microsoft_YaHei',sans-serif]">
       {/* 主内容区 */}
-      <div className="px-5 pb-[200px]">
+      <div className="px-5 pb-[200px] min-h-screen">
         {/* 标题区域 */}
         <div className="text-center mb-[30px]">
           <img 
@@ -63,7 +63,7 @@ export default function ProductView({ onProductClick }: ProductViewProps) {
         </div>
 
         {/* 产品网格 */}
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center">
           <div className="flex flex-wrap justify-start max-w-[1160px] w-full">
             {texts.products.map((product) => (
               <ProductCard
@@ -91,19 +91,23 @@ interface ProductCardProps {
 function ProductCard({ product, onClick }: ProductCardProps) {
   return (
     <div
-      className="w-[30%] mt-5 ml-5 bg-white rounded-lg overflow-hidden cursor-pointer 
-                 transition-transform hover:-translate-y-1 shadow-[0_2px_6px_rgba(0,0,0,0.05)]
-                 md:w-full md:ml-0 md:mt-5"
+      className="w-[30%] bg-white overflow-hidden cursor-pointer 
+                 transition-transform hover:-translate-y-1 shadow-[0_4px_12px_rgba(0,0,0,0.05)]
+                 flex-[0_0_auto]"
+      style={{
+        margin: '20px 0 0 20px',
+        borderRadius: '8px'
+      }}
       onClick={onClick}
     >
-      <div className="w-full h-[250px] relative overflow-hidden md:h-[120px]">
+      <div className="w-full h-[250px] relative overflow-hidden">
         <img 
           src={`/images/${product.image}`}
           alt={product.title}
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="h-[72px] leading-[72px] text-center text-sm font-bold text-[#333] md:text-[13px]">
+      <div className="h-[72px] leading-[72px] text-center text-[14px] font-bold text-[#333]">
         {product.title}
       </div>
     </div>
