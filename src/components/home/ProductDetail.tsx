@@ -6,10 +6,7 @@ interface ProductDetailProps {
 
 export default function ProductDetail({ onGoDetail }: ProductDetailProps) {
   return (
-    <div
-      className="pt-16 h-full bg-gray-50"
-      style={{ fontFamily: '"Microsoft YaHei", sans-serif' }}
-    >
+    <div className="pt-16 h-full bg-gray-50">
       {/* 主内容区 */}
       <div className="mx-auto p-5 max-w-4xl min-h-[70vh]">
         <div className="font-medium text-3xl text-gray-800 text-center mb-8">

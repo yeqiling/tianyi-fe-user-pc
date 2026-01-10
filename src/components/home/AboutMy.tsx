@@ -7,10 +7,7 @@ interface AboutMyProps {
 
 export default function AboutMy({ onGoDetail }: AboutMyProps) {
   return (
-    <div
-      className="pt-16 h-full bg-gray-50"
-      style={{ fontFamily: '"Microsoft YaHei", sans-serif' }}
-    >
+    <div className="pt-16 h-full bg-gray-50">
       <div className="mx-auto px-5 max-w-4xl min-h-screen">
         <div className="font-medium text-3xl text-gray-800 text-center mb-8">
           <p className="font-medium text-3xl text-gray-800 leading-7 m-8">
@@ -38,29 +35,15 @@ export default function AboutMy({ onGoDetail }: AboutMyProps) {
 
         <div
           onClick={() => onGoDetail(2)}
-          className="mx-auto w-39 h-13 leading-13 text-center text-lg text-black rounded-full border-2 border-black cursor-pointer"
-          style={{
-            width: '156px',
-            height: '52px',
-            lineHeight: '52px',
-            boxShadow: '0px 6px 12px 1px rgba(0, 0, 0, 0.16)',
-          }}
+          className="mx-auto w-[156px] h-[52px] leading-[52px] text-center text-lg text-black rounded-full border-2 border-black cursor-pointer shadow-[0px_6px_12px_1px_rgba(0,0,0,0.16)]"
         >
           返回首页
         </div>
       </div>
 
-      <div
-        className="relative bg-white text-white px-5 w-full"
-        style={{ height: '187px' }}
-      >
+      <div className="relative bg-white text-white px-5 w-full h-[187px]">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-          <img
-            src={icon_logo_black}
-            alt=""
-            className="h-8.5 w-33.5"
-            style={{ height: '34px', width: '134px' }}
-          />
+          <img src={icon_logo_black} alt="" className="w-[134px] h-[34px]" />
           <div className="mt-4 font-normal text-lg text-gray-600">
             © 2025 天乙神算. 保留所有权利.
           </div>

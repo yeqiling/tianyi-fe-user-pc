@@ -15,7 +15,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white" style={{ fontFamily: '"Microsoft YaHei", sans-serif' }}>
+    <div className="min-h-screen bg-white">
       <Header />
       
       <main>

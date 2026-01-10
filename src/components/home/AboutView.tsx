@@ -50,100 +50,32 @@ export default function AboutView({ onGoDetail }: AboutViewProps) {
   const texts = aboutTexts[currentLanguage];
 
   return (
-    <div
-      style={{
-        paddingTop: '65px',
-        height: '100%',
-        fontFamily: '"Microsoft YaHei", sans-serif',
-        backgroundColor: '#f9fafb',
-      }}
-    >
+    <div className="h-full bg-gray-50 pt-[65px]">
       {/* 主内容区 */}
-      <div
-        style={{
-          padding: '20px',
-          paddingBottom: '200px',
-          minHeight: '100vh',
-        }}
-      >
+      <div className="p-5 min-h-screen pb-[200px]">
         {/* 背景标题区 */}
-        <div
-          style={{
-            width: '100%',
-            height: '320px',
-            marginBottom: '52px',
-            background: `url(${about_bg}) no-repeat`,
-            backgroundSize: 'cover',
-          }}
-        ></div>
+        <div 
+          className="w-full h-[320px] mb-[52px] bg-cover bg-no-repeat"
+          style={{ backgroundImage: `url(${about_bg})` }}
+        />
 
         {/* 产品网格 */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            maxWidth: '1160px',
-            margin: '0 auto',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              width: '100%',
-              justifyContent: 'center',
-            }}
-          >
+        <div className="flex items-center max-w-[1160px] mx-auto">
+          <div className="flex flex-wrap w-full justify-center">
             {texts.items.map((item, index) => (
               <div
                 key={index}
-                style={{
-                  width: '30%',
-                  margin: '20px 0 0 15px',
-                  backgroundColor: '#fff',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05)',
-                  transition: 'transform 0.2s',
-                  cursor: 'pointer',
-                  flex: '0 0 auto',
-                }}
+                className="w-[30%] bg-white rounded-lg overflow-hidden cursor-pointer transition-transform duration-200 hover:-translate-y-0.5 mt-5 ml-[15px] shadow-[0_2px_6px_rgba(0,0,0,0.05)]"
                 onClick={() => onGoDetail(item.detailId)}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
               >
-                <div
-                  style={{
-                    width: '100%',
-                    height: '250px',
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
-                >
+                <div className="w-full h-[250px] relative overflow-hidden">
                   <img
                     src={imageMap[item.image]}
                     alt={item.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                    }}
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div
-                  style={{
-                    height: '72px',
-                    lineHeight: '72px',
-                    fontSize: '14px',
-                    color: '#333',
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                  }}
-                >
+                <div className="text-sm text-gray-800 text-center font-bold h-[72px] leading-[72px]">
                   {item.title}
                 </div>
               </div>
