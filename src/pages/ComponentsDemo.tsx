@@ -1,12 +1,18 @@
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
+import { Button } from '@/components/common/ui/button';
+import { Input } from '@/components/common/ui/input';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/common/ui/Card';
 
 export const ComponentsDemo = () => {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <h1 className="text-3xl font-bold">shadcn/ui 组件演示</h1>
-      
+
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>登录</CardTitle>
@@ -17,7 +23,9 @@ export const ComponentsDemo = () => {
           <Input placeholder="密码" type="password" />
           <div className="flex space-x-2">
             <Button className="flex-1">登录</Button>
-            <Button variant="outline" className="flex-1">取消</Button>
+            <Button variant="outline" className="flex-1">
+              取消
+            </Button>
           </div>
         </CardContent>
       </Card>

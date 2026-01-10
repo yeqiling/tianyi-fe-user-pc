@@ -1,6 +1,6 @@
 import { useStore } from '@tanstack/react-store'
 import { navigationStore, setActiveNav } from '../stores/navigationStore'
-import Header from '../components/shared/Header'
+import Header from '../components/home/Header'
 import HomeView from '../components/home/HomeView'
 import ProductView from '../components/home/ProductView'
 import AboutView from '../components/home/AboutView'
