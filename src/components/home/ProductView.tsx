@@ -63,8 +63,8 @@ export default function ProductView({ onProductClick }: ProductViewProps) {
         </div>
 
         {/* 产品网格 */}
-        <div className="flex justify-center items-center">
-          <div className="flex flex-wrap justify-start max-w-[1160px] w-full">
+        <div className="flex items-center max-w-[1160px] mx-auto">
+          <div className="flex flex-wrap justify-start w-full">
             {texts.products.map((product) => (
               <ProductCard
                 key={product.id}
