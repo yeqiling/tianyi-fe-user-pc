@@ -1,4 +1,5 @@
 import { useStore } from '@tanstack/react-store'
+import { useNavigate } from '@tanstack/react-router'
 import { languageStore } from '../../stores/languageStore'
 
 const homeTexts = {
@@ -32,11 +33,11 @@ const homeTexts = {
 
 export default function HomeView() {
   const { currentLanguage } = useStore(languageStore)
+  const navigate = useNavigate()
   const texts = homeTexts[currentLanguage]
 
   const handleLogin = () => {
-    // TODO: 实现登录跳转逻辑
-    console.log('Navigate to login')
+    navigate({ to: '/login' })
   }
 
   return (

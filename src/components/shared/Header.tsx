@@ -1,4 +1,5 @@
 import { useStore } from '@tanstack/react-store'
+import { useNavigate } from '@tanstack/react-router'
 import { navigationStore, setActiveNav } from '../../stores/navigationStore'
 import { languageStore, setLanguage as setLang } from '../../stores/languageStore'
 import { languages, navigationTabs, loginTexts } from '../../constants/navigation'
@@ -6,6 +7,7 @@ import { languages, navigationTabs, loginTexts } from '../../constants/navigatio
 export default function Header() {
   const { activeNav } = useStore(navigationStore)
   const { currentLanguage } = useStore(languageStore)
+  const navigate = useNavigate()
   
   const currentIndex = languages.findIndex(lang => lang.code === currentLanguage)
   const tabs = navigationTabs[currentLanguage]
@@ -22,8 +24,7 @@ export default function Header() {
   }
 
   const handleLogin = (type: 'login' | 'register') => {
-    // TODO: 实现登录跳转逻辑
-    console.log('Login type:', type)
+    navigate({ to: '/login', search: { type } })
   }
 
   return (
