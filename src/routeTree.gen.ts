@@ -14,6 +14,10 @@ import { Route as MingshuRouteImport } from './routes/mingshu'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MingshuIndexRouteImport } from './routes/mingshu/index'
+import { Route as MingshuYungeRouteImport } from './routes/mingshu/yunge'
+import { Route as MingshuKefuRouteImport } from './routes/mingshu/kefu'
+import { Route as MingshuBaziRouteImport } from './routes/mingshu/bazi'
+import { Route as MingshuBaogeRouteImport } from './routes/mingshu/baoge'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -40,18 +44,46 @@ const MingshuIndexRoute = MingshuIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MingshuRoute,
 } as any)
+const MingshuYungeRoute = MingshuYungeRouteImport.update({
+  id: '/yunge',
+  path: '/yunge',
+  getParentRoute: () => MingshuRoute,
+} as any)
+const MingshuKefuRoute = MingshuKefuRouteImport.update({
+  id: '/kefu',
+  path: '/kefu',
+  getParentRoute: () => MingshuRoute,
+} as any)
+const MingshuBaziRoute = MingshuBaziRouteImport.update({
+  id: '/bazi',
+  path: '/bazi',
+  getParentRoute: () => MingshuRoute,
+} as any)
+const MingshuBaogeRoute = MingshuBaogeRouteImport.update({
+  id: '/baoge',
+  path: '/baoge',
+  getParentRoute: () => MingshuRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/mingshu': typeof MingshuRouteWithChildren
   '/register': typeof RegisterRoute
+  '/mingshu/baoge': typeof MingshuBaogeRoute
+  '/mingshu/bazi': typeof MingshuBaziRoute
+  '/mingshu/kefu': typeof MingshuKefuRoute
+  '/mingshu/yunge': typeof MingshuYungeRoute
   '/mingshu/': typeof MingshuIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/mingshu/baoge': typeof MingshuBaogeRoute
+  '/mingshu/bazi': typeof MingshuBaziRoute
+  '/mingshu/kefu': typeof MingshuKefuRoute
+  '/mingshu/yunge': typeof MingshuYungeRoute
   '/mingshu': typeof MingshuIndexRoute
 }
 export interface FileRoutesById {
@@ -60,14 +92,45 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/mingshu': typeof MingshuRouteWithChildren
   '/register': typeof RegisterRoute
+  '/mingshu/baoge': typeof MingshuBaogeRoute
+  '/mingshu/bazi': typeof MingshuBaziRoute
+  '/mingshu/kefu': typeof MingshuKefuRoute
+  '/mingshu/yunge': typeof MingshuYungeRoute
   '/mingshu/': typeof MingshuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/mingshu' | '/register' | '/mingshu/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/mingshu'
+    | '/register'
+    | '/mingshu/baoge'
+    | '/mingshu/bazi'
+    | '/mingshu/kefu'
+    | '/mingshu/yunge'
+    | '/mingshu/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/mingshu'
-  id: '__root__' | '/' | '/login' | '/mingshu' | '/register' | '/mingshu/'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/mingshu/baoge'
+    | '/mingshu/bazi'
+    | '/mingshu/kefu'
+    | '/mingshu/yunge'
+    | '/mingshu'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/mingshu'
+    | '/register'
+    | '/mingshu/baoge'
+    | '/mingshu/bazi'
+    | '/mingshu/kefu'
+    | '/mingshu/yunge'
+    | '/mingshu/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -114,14 +177,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MingshuIndexRouteImport
       parentRoute: typeof MingshuRoute
     }
+    '/mingshu/yunge': {
+      id: '/mingshu/yunge'
+      path: '/yunge'
+      fullPath: '/mingshu/yunge'
+      preLoaderRoute: typeof MingshuYungeRouteImport
+      parentRoute: typeof MingshuRoute
+    }
+    '/mingshu/kefu': {
+      id: '/mingshu/kefu'
+      path: '/kefu'
+      fullPath: '/mingshu/kefu'
+      preLoaderRoute: typeof MingshuKefuRouteImport
+      parentRoute: typeof MingshuRoute
+    }
+    '/mingshu/bazi': {
+      id: '/mingshu/bazi'
+      path: '/bazi'
+      fullPath: '/mingshu/bazi'
+      preLoaderRoute: typeof MingshuBaziRouteImport
+      parentRoute: typeof MingshuRoute
+    }
+    '/mingshu/baoge': {
+      id: '/mingshu/baoge'
+      path: '/baoge'
+      fullPath: '/mingshu/baoge'
+      preLoaderRoute: typeof MingshuBaogeRouteImport
+      parentRoute: typeof MingshuRoute
+    }
   }
 }
 
 interface MingshuRouteChildren {
+  MingshuBaogeRoute: typeof MingshuBaogeRoute
+  MingshuBaziRoute: typeof MingshuBaziRoute
+  MingshuKefuRoute: typeof MingshuKefuRoute
+  MingshuYungeRoute: typeof MingshuYungeRoute
   MingshuIndexRoute: typeof MingshuIndexRoute
 }
 
 const MingshuRouteChildren: MingshuRouteChildren = {
+  MingshuBaogeRoute: MingshuBaogeRoute,
+  MingshuBaziRoute: MingshuBaziRoute,
+  MingshuKefuRoute: MingshuKefuRoute,
+  MingshuYungeRoute: MingshuYungeRoute,
   MingshuIndexRoute: MingshuIndexRoute,
 }
 

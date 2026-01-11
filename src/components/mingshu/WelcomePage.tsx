@@ -1,4 +1,5 @@
 import { useStore } from '@tanstack/react-store';
+import { useNavigate } from '@tanstack/react-router';
 import { navigationActions, navigationStore } from '../../stores/navigationStore';
 import { userStore } from '../../stores/userStore';
 import daoIcon from '@/assets/images/dao.png';
@@ -22,9 +23,11 @@ import yun5Icon from '@/assets/images/yun5.png';
 export default function WelcomePage() {
   const userState = useStore(userStore);
   const navState = useStore(navigationStore);
+  const navigate = useNavigate();
 
   const showService = (service: string, icon: string) => {
     navigationActions.showService({ name: service, icon });
+    navigate({ to: '/mingshu/bazi' });
   };
 
   const services = [

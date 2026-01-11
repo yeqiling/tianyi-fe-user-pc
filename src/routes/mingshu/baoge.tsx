@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import WelcomePage from '@/components/mingshu/WelcomePage';
 import { navigationActions } from '@/stores/navigationStore';
+import WelcomePage from '@/components/mingshu/WelcomePage';
 
-export const Route = createFileRoute('/mingshu/')({
-  component: MingshuIndexRoute,
+export const Route = createFileRoute('/mingshu/baoge')({
+  component: BaogeRoute,
 });
 
-function MingshuIndexRoute() {
+function BaogeRoute() {
   useEffect(() => {
-    navigationActions.setActiveMenu('命书');
+    navigationActions.setActiveMenu('宝阁');
     navigationActions.hideBaziContent();
   }, []);
 

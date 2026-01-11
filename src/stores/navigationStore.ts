@@ -31,6 +31,9 @@ export const navigationActions = {
       titleIcon: service.icon
     }))
   },
+  showBaziContent: () => {
+    navigationStore.setState((prev) => ({ ...prev, showBaziContent: true }))
+  },
   selectItem: (item: string) => {
     navigationStore.setState((prev) => ({ ...prev, selectedItem: item }))
   },

@@ -30,6 +30,13 @@ export default function MingShuSidebar() {
 
   const switchMenu = (menu: MenuType) => {
     navigationActions.setActiveMenu(menu);
+    const menuRoutes: Record<MenuType, string> = {
+      命书: '/mingshu',
+      运阁: '/mingshu/yunge',
+      宝阁: '/mingshu/baoge',
+      kefu: '/mingshu/kefu',
+    };
+    navigate({ to: menuRoutes[menu] });
   };
 
   const showAddSubAccount = () => {

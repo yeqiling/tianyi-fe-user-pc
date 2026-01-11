@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { useStore } from '@tanstack/react-store'
 import { navigationActions, navigationStore } from '../../stores/navigationStore'
 import baogaoIcon from '@/assets/images/baogao.png'
@@ -9,6 +10,7 @@ import iswdzjIcon from '@/assets/images/iswdzj.png'
 import wdzjIcon from '@/assets/images/wdzj.png'
 
 export default function BaziSidebar() {
+  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [reportHistoryList] = useState<any[]>([])
   
@@ -140,7 +142,10 @@ export default function BaziSidebar() {
           {/* 底部返回按钮 */}
           <div className="border-t border-[#e0e0e0] p-5">
             <button
-              onClick={navigationActions.backToMingshu}
+              onClick={() => {
+                navigationActions.backToMingshu()
+                navigate({ to: '/mingshu' })
+              }}
               className="w-full cursor-pointer rounded-md border border-[#ddd] bg-[#f5f5f5] p-2.5 text-sm"
             >
               返回命书

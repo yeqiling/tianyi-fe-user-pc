@@ -1,4 +1,5 @@
 import { useStore } from '@tanstack/react-store'
+import { useNavigate } from '@tanstack/react-router'
 import { navigationActions } from '../../stores/navigationStore'
 import { userStore } from '../../stores/userStore'
 import daoIcon from '@/assets/images/dao.png'
@@ -14,9 +15,11 @@ import yun6Icon from '@/assets/images/yun6.png'
 
 export default function YungeWelcome() {
   const userState = useStore(userStore)
+  const navigate = useNavigate()
 
   const goToService = (service: string, icon: string) => {
     navigationActions.showService({ name: service, icon })
+    navigate({ to: '/mingshu/bazi' })
   }
 
   const yungeServices = [
