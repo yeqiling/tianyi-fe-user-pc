@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useStore } from '@tanstack/react-store'
+import { dialogActions } from '../../stores/dialogStore'
+import { navigationStore } from '../../stores/navigationStore'
 import btn2026 from '@/assets/images/2026_btn_bg.png'
 import bg2026 from '@/assets/images/2026ny_bg.png'
 import title2026 from '@/assets/images/2026ny_t_bg.png'
@@ -25,27 +28,11 @@ import xyfzBg from '@/assets/images/xyfz_bg.png'
 import xyfzBtn from '@/assets/images/xyfz_btn_bg.png'
 import xyfzTitle from '@/assets/images/xyfz_t_bg.png'
 
-interface StartHunLianProps {
-  title: string
-  onShowReport: (data: any) => void
-  onPaySuccess: () => void
-  onCesuanbeijingFunction: (data: any) => void
-  onShowVip: () => void
-  onGetReportFive: (data: any) => void
-  onShowMyMemberPage: () => void
-}
-
-export default function StartHunLian({
-  title,
-  onShowReport,
-  onPaySuccess,
-  onCesuanbeijingFunction,
-  onShowVip,
-  onGetReportFive,
-  onShowMyMemberPage
-}: StartHunLianProps) {
+export default function StartHunLian() {
   const [modelShow, setModelShow] = useState(false)
   const [xingbi] = useState(10) // TODO: Get from API based on service type
+  const navState = useStore(navigationStore)
+  const title = navState.selectedItem
   
   const [formData, setFormData] = useState({
     nickname: '小明',
@@ -81,17 +68,8 @@ export default function StartHunLian({
     setModelShow(true)
   }
 
-  const passwordClose = () => {
-    setModelShow(false)
-  }
-
   const onFormDataChange = (data: any) => {
     setFormData({ ...formData, ...data })
-  }
-
-  const onSave = () => {
-    // TODO: Save form data
-    console.log('Save form data:', formData)
   }
 
   const onCancel = () => {
@@ -101,32 +79,8 @@ export default function StartHunLian({
   const handleSubmit = () => {
     // TODO: Submit form and generate report
     console.log('Submit form:', formData)
-    onShowReport(formData)
+    dialogActions.showReport()
     setModelShow(false)
-  }
-
-  const paySuccess = () => {
-    onPaySuccess()
-  }
-
-  const cesuanbeijingFun = (data: any) => {
-    onCesuanbeijingFunction(data)
-  }
-
-  const showVipFun = () => {
-    onShowVip()
-  }
-
-  const getReportFive = (data: any) => {
-    onGetReportFive(data)
-  }
-
-  const closeOuterPopup = () => {
-    setModelShow(false)
-  }
-
-  const showMyMemberPage = () => {
-    onShowMyMemberPage()
   }
 
   return (

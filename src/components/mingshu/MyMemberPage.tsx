@@ -1,25 +1,18 @@
-interface MyMemberPageProps {
-  onClose: () => void
-  onShowModal: () => void
-  onShoweditModal: () => void
-  onShowSubAccModal: () => void
-  onPollOrderStatus: () => void
-}
+import { useStore } from '@tanstack/react-store'
+import { modalActions, modalStore } from '../../stores/modalStore'
 
-export default function MyMemberPage({
-  onClose,
-  onShowModal,
-  onShoweditModal,
-  onShowSubAccModal,
-  onPollOrderStatus
-}: MyMemberPageProps) {
+export default function MyMemberPage() {
+  const modalState = useStore(modalStore)
+
+  if (!modalState.myMemberPageShow) return null
+
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
       <div className="max-h-[80vh] w-[500px] max-w-[90vw] overflow-auto rounded-xl bg-white p-[30px]">
         <div className="mb-5 flex items-center justify-between">
           <h2 className="m-0 text-xl font-bold">我的会员</h2>
           <button
-            onClick={onClose}
+            onClick={modalActions.hideMemberPage}
             className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
@@ -39,19 +32,19 @@ export default function MyMemberPage({
           
           <div className="mt-[30px] flex justify-center gap-2.5">
             <button
-              onClick={onShowModal}
+              onClick={modalActions.showXingbi}
               className="cursor-pointer rounded-md border-0 bg-[#1976d2] px-5 py-2.5 text-white"
             >
               星币详情
             </button>
             <button
-              onClick={onShoweditModal}
+              onClick={modalActions.showEditUserInfo}
               className="cursor-pointer rounded-md border-0 bg-[#4caf50] px-5 py-2.5 text-white"
             >
               编辑信息
             </button>
             <button
-              onClick={onShowSubAccModal}
+              onClick={modalActions.showSubAccountList}
               className="cursor-pointer rounded-md border-0 bg-[#ff9800] px-5 py-2.5 text-white"
             >
               子账户

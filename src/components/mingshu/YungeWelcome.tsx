@@ -1,4 +1,5 @@
 import { useStore } from '@tanstack/react-store'
+import { navigationActions } from '../../stores/navigationStore'
 import { userStore } from '../../stores/userStore'
 import daoIcon from '@/assets/images/dao.png'
 import xingIcon from '@/assets/images/xing.png'
@@ -11,16 +12,11 @@ import yun4Icon from '@/assets/images/yun4.png'
 import yun5Icon from '@/assets/images/yun5.png'
 import yun6Icon from '@/assets/images/yun6.png'
 
-interface YungeWelcomeProps {
-  onShowBazi: (service: string, icon: string) => void
-  onShowVipModal: () => void
-}
-
-export default function YungeWelcome({ onShowBazi, onShowVipModal }: YungeWelcomeProps) {
+export default function YungeWelcome() {
   const userState = useStore(userStore)
 
   const goToService = (service: string, icon: string) => {
-    onShowBazi(service, icon)
+    navigationActions.showService({ name: service, icon })
   }
 
   const yungeServices = [

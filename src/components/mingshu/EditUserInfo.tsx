@@ -1,11 +1,10 @@
-interface EditUserInfoProps {
-  showModal: boolean
-  editType: string
-  onClose: () => void
-}
+import { useStore } from '@tanstack/react-store'
+import { modalActions, modalStore } from '../../stores/modalStore'
 
-export default function EditUserInfo({ showModal, editType, onClose }: EditUserInfoProps) {
-  if (!showModal) return null
+export default function EditUserInfo() {
+  const modalState = useStore(modalStore)
+
+  if (!modalState.showEditUserInfo) return null
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
@@ -13,7 +12,7 @@ export default function EditUserInfo({ showModal, editType, onClose }: EditUserI
         <div className="mb-5 flex items-center justify-between">
           <h2 className="m-0 text-xl font-bold">编辑用户信息</h2>
           <button
-            onClick={onClose}
+            onClick={modalActions.hideEditUserInfo}
             className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
@@ -39,13 +38,13 @@ export default function EditUserInfo({ showModal, editType, onClose }: EditUserI
 
           <div className="mt-[30px] flex justify-center gap-4">
             <button
-              onClick={onClose}
+              onClick={modalActions.hideEditUserInfo}
               className="cursor-pointer rounded-md border border-[#ddd] bg-[#f5f5f5] px-5 py-2.5"
             >
               取消
             </button>
             <button
-              onClick={onClose}
+              onClick={modalActions.hideEditUserInfo}
               className="cursor-pointer rounded-md border-0 bg-[#1976d2] px-5 py-2.5 text-white"
             >
               保存

@@ -1,21 +1,14 @@
-interface BaziReportProps {
-  title: string
-  message: string
-  onUpdateReportList: () => void
-  onShowLoading: (show: boolean) => void
-  onNewDialogCreated: (dialog: any) => void
-}
+import { useStore } from '@tanstack/react-store'
+import { dialogStore } from '../../stores/dialogStore'
+import { navigationStore } from '../../stores/navigationStore'
 
-export default function BaziReport({ 
-  title, 
-  message, 
-  onUpdateReportList, 
-  onShowLoading, 
-  onNewDialogCreated 
-}: BaziReportProps) {
+export default function BaziReport() {
+  const dialogState = useStore(dialogStore)
+  const navState = useStore(navigationStore)
+
   return (
     <div className="p-5">
-      <h2>{title}</h2>
+      <h2>{navState.selectedItem}</h2>
       <div className="rounded-lg bg-[#f8f9fa] p-10 text-center">
         <p>报告功能开发中...</p>
         <p>将包含：</p>
@@ -25,9 +18,9 @@ export default function BaziReport({
           <li>历史记录</li>
           <li>导出功能</li>
         </ul>
-        {message && (
+        {dialogState.reportMessage && (
           <div className="mt-5 rounded bg-[#e3f2fd] p-2.5">
-            <strong>测算背景：</strong> {message}
+            <strong>测算背景：</strong> {dialogState.reportMessage}
           </div>
         )}
       </div>

@@ -1,47 +1,34 @@
 import { useState } from 'react'
 import { useStore } from '@tanstack/react-store'
-import { modalStore } from '../../stores/modalStore'
+import { modalActions, modalStore } from '../../stores/modalStore'
 import qrPlaceholder from '@/assets/images/icon.png'
 import yesIcon from '@/assets/images/yes.png'
 
-interface VipModalProps {
-  visible: boolean
-  onUpdateVisible: (visible: boolean) => void
-  onConfirm: () => void
-  onPollOrderStatus: () => void
-  onRedeemCodeSuccess: () => void
-}
-
-export default function VipModal({ 
-  visible, 
-  onUpdateVisible, 
-  onConfirm, 
-  onPollOrderStatus, 
-  onRedeemCodeSuccess 
-}: VipModalProps) {
+export default function VipModal() {
   const [paymentMethod, setPaymentMethod] = useState<'alipay' | 'weixin' | 'code'>('alipay')
   const [redeemCode, setRedeemCode] = useState('')
   const [vipMoney] = useState(168) // TODO: Get from API
+  const modalState = useStore(modalStore)
 
   const hide = () => {
-    onUpdateVisible(false)
+    modalActions.hideVip()
   }
 
   const pay = () => {
     // TODO: Implement payment logic
     console.log('Payment method:', paymentMethod)
-    onConfirm()
+    modalActions.hideVip()
   }
 
   const handleRedeemCode = () => {
     if (redeemCode.trim()) {
       // TODO: Implement redeem code logic
       console.log('Redeem code:', redeemCode)
-      onRedeemCodeSuccess()
+      modalActions.hideVip()
     }
   }
 
-  if (!visible) return null
+  if (!modalState.vipModelVisible) return null
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center">

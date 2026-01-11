@@ -17,3 +17,31 @@ export const navigationStore = new Store<NavigationState>({
   title: '',
   titleIcon: '',
 })
+
+export const navigationActions = {
+  setActiveMenu: (menu: MenuType) => {
+    navigationStore.setState((prev) => ({ ...prev, activeMenu: menu }))
+  },
+  showService: (service: { name: string; icon: string }) => {
+    navigationStore.setState((prev) => ({
+      ...prev,
+      showBaziContent: true,
+      selectedItem: service.name,
+      title: service.name,
+      titleIcon: service.icon
+    }))
+  },
+  selectItem: (item: string) => {
+    navigationStore.setState((prev) => ({ ...prev, selectedItem: item }))
+  },
+  hideBaziContent: () => {
+    navigationStore.setState((prev) => ({ ...prev, showBaziContent: false }))
+  },
+  backToMingshu: () => {
+    navigationStore.setState((prev) => ({
+      ...prev,
+      showBaziContent: false,
+      activeMenu: '命书'
+    }))
+  }
+}

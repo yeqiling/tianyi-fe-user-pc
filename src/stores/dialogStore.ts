@@ -21,3 +21,22 @@ export const dialogStore = new Store<DialogState>({
   reportMessage: '',
   reportView: false,
 })
+
+export const dialogActions = {
+  showReport: (data?: any) => {
+    dialogStore.setState((prev) => ({
+      ...prev,
+      reportView: true,
+      latestReportData: data ?? prev.latestReportData
+    }))
+  },
+  setReportMessage: (message: string) => {
+    dialogStore.setState((prev) => ({ ...prev, reportMessage: message }))
+  },
+  setCurrentDialog: (dialog: any) => {
+    dialogStore.setState((prev) => ({ ...prev, currentDialog: dialog }))
+  },
+  setPollingCancelled: (cancelled: boolean) => {
+    dialogStore.setState((prev) => ({ ...prev, isPollingCancelled: cancelled }))
+  }
+}

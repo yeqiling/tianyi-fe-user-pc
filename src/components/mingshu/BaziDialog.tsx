@@ -1,22 +1,9 @@
-interface BaziDialogProps {
-  currentDialog: any
-  isNew: boolean
-  currentData: any
-  isPollingCancelled: boolean
-  hasGeneratedReport: boolean
-  onNewDialogCreated: (dialog: any) => void
-  onUpdateMoney: (amount: number) => void
-}
+import { useStore } from '@tanstack/react-store'
+import { dialogStore } from '../../stores/dialogStore'
 
-export default function BaziDialog({ 
-  currentDialog, 
-  isNew, 
-  currentData, 
-  isPollingCancelled, 
-  hasGeneratedReport,
-  onNewDialogCreated, 
-  onUpdateMoney 
-}: BaziDialogProps) {
+export default function BaziDialog() {
+  const dialogState = useStore(dialogStore)
+
   return (
     <div className="p-5">
       <h2>对话功能</h2>
@@ -30,9 +17,9 @@ export default function BaziDialog({
           <li>多轮对话</li>
         </ul>
         <div className="mt-5 text-xs text-[#666]">
-          <p>当前对话: {currentDialog ? '有' : '无'}</p>
-          <p>是否新对话: {isNew ? '是' : '否'}</p>
-          <p>已生成报告: {hasGeneratedReport ? '是' : '否'}</p>
+          <p>当前对话: {dialogState.currentDialog ? '有' : '无'}</p>
+          <p>是否新对话: {dialogState.isNew ? '是' : '否'}</p>
+          <p>已生成报告: {dialogState.latestReportData ? '是' : '否'}</p>
         </div>
       </div>
     </div>

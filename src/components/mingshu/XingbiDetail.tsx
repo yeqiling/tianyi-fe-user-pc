@@ -1,11 +1,12 @@
-interface XingbiDetailProps {
-  showModal: boolean
-  money: number
-  onClose: () => void
-}
+import { useStore } from '@tanstack/react-store'
+import { modalActions, modalStore } from '../../stores/modalStore'
+import { userStore } from '../../stores/userStore'
 
-export default function XingbiDetail({ showModal, money, onClose }: XingbiDetailProps) {
-  if (!showModal) return null
+export default function XingbiDetail() {
+  const modalState = useStore(modalStore)
+  const userState = useStore(userStore)
+
+  if (!modalState.showXingbi) return null
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
@@ -13,7 +14,7 @@ export default function XingbiDetail({ showModal, money, onClose }: XingbiDetail
         <div className="mb-5 flex items-center justify-between">
           <h2 className="m-0 text-xl font-bold">星币详情</h2>
           <button
-            onClick={onClose}
+            onClick={modalActions.hideXingbi}
             className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
@@ -22,7 +23,7 @@ export default function XingbiDetail({ showModal, money, onClose }: XingbiDetail
 
         <div className="p-5 text-center">
           <div className="mb-2.5 text-5xl font-bold text-[#ff6b35]">
-            {money}
+            {userState.money}
           </div>
           <div className="mb-5 text-base text-[#666]">
             当前星币余额
@@ -39,7 +40,7 @@ export default function XingbiDetail({ showModal, money, onClose }: XingbiDetail
           </div>
 
           <button
-            onClick={onClose}
+            onClick={modalActions.hideXingbi}
             className="mt-5 cursor-pointer rounded-md border-0 bg-[#1976d2] px-[30px] py-2.5 text-white"
           >
             确定

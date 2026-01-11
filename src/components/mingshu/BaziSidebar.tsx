@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useStore } from '@tanstack/react-store'
-import { navigationStore } from '../../stores/navigationStore'
+import { navigationActions, navigationStore } from '../../stores/navigationStore'
 import baogaoIcon from '@/assets/images/baogao.png'
 import duihuaIcon from '@/assets/images/duihua.png'
 import isbaogaoIcon from '@/assets/images/isbaogao.png'
@@ -8,46 +8,13 @@ import isduihuaIcon from '@/assets/images/isduihua.png'
 import iswdzjIcon from '@/assets/images/iswdzj.png'
 import wdzjIcon from '@/assets/images/wdzj.png'
 
-interface BaziSidebarProps {
-  titleIcon: string
-  title: string
-  activeMenu: string
-  onBack: () => void
-  onSelect: (item: string) => void
-  onClickReport: () => void
-  onNewDialog: () => void
-  onSelectHistory: (item: any) => void
-  onBackToMingshu: () => void
-  onCreateNewReport: () => void
-  onSelectReportHistory: (item: any) => void
-  onUpdateLatestReport: (data: any) => void
-  onShowVip: () => void
-  onCesuanbeijingFunction: (data: any) => void
-  onShowMyMemberPage: () => void
-}
-
-export default function BaziSidebar({
-  titleIcon,
-  title,
-  activeMenu,
-  onBack,
-  onSelect,
-  onClickReport,
-  onNewDialog,
-  onSelectHistory,
-  onBackToMingshu,
-  onCreateNewReport,
-  onSelectReportHistory,
-  onUpdateLatestReport,
-  onShowVip,
-  onCesuanbeijingFunction,
-  onShowMyMemberPage
-}: BaziSidebarProps) {
+export default function BaziSidebar() {
   const [collapsed, setCollapsed] = useState(false)
-  const [activeItem, setActiveItem] = useState('')
-  const [reportHistoryList, setReportHistoryList] = useState<any[]>([])
+  const [reportHistoryList] = useState<any[]>([])
   
   const navState = useStore(navigationStore)
+  const activeItem = navState.selectedItem
+  const title = navState.title || navState.selectedItem
 
   // 直接显示报告的项目
   const titleArr = ['性格内观', '事业财富', '婚恋感情', '身体健康']
@@ -57,17 +24,12 @@ export default function BaziSidebar({
   }
 
   const selectItem = (item: string) => {
-    setActiveItem(item)
-    onSelect(item)
+    navigationActions.selectItem(item)
   }
 
-  const createNewReport = () => {
-    onCreateNewReport()
-  }
+  const createNewReport = () => {}
 
-  const loadReportAndDialogs = (item: any) => {
-    onSelectReportHistory(item)
-  }
+  const loadReportAndDialogs = (item: any) => {}
 
   return (
     <div
@@ -78,7 +40,7 @@ export default function BaziSidebar({
         {!collapsed && (
           <div className="flex items-center">
             <img
-              src={titleIcon}
+              src={navState.titleIcon}
               className="mr-2.5 h-6 w-6"
             />
             <span className="text-base font-bold">{title}</span>
@@ -178,7 +140,7 @@ export default function BaziSidebar({
           {/* 底部返回按钮 */}
           <div className="border-t border-[#e0e0e0] p-5">
             <button
-              onClick={onBackToMingshu}
+              onClick={navigationActions.backToMingshu}
               className="w-full cursor-pointer rounded-md border border-[#ddd] bg-[#f5f5f5] p-2.5 text-sm"
             >
               返回命书

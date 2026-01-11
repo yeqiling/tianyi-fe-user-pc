@@ -1,4 +1,5 @@
 import { useStore } from '@tanstack/react-store';
+import { navigationActions, navigationStore } from '../../stores/navigationStore';
 import { userStore } from '../../stores/userStore';
 import daoIcon from '@/assets/images/dao.png';
 import deIcon from '@/assets/images/de.png';
@@ -18,21 +19,12 @@ import yun3Icon from '@/assets/images/yun3.png';
 import yun4Icon from '@/assets/images/yun4.png';
 import yun5Icon from '@/assets/images/yun5.png';
 
-interface WelcomePageProps {
-  activeMenu: string;
-  onShowBazi: (service: string, icon: string) => void;
-  onShowVipModal: () => void;
-}
-
-export default function WelcomePage({
-  activeMenu,
-  onShowBazi,
-  onShowVipModal,
-}: WelcomePageProps) {
+export default function WelcomePage() {
   const userState = useStore(userStore);
+  const navState = useStore(navigationStore);
 
   const showService = (service: string, icon: string) => {
-    onShowBazi(service, icon);
+    navigationActions.showService({ name: service, icon });
   };
 
   const services = [
@@ -67,14 +59,14 @@ export default function WelcomePage({
 
         <div>
           <img
-            src={activeMenu === '命书' ? msTitle : smzxjTitle}
+            src={navState.activeMenu === '命书' ? msTitle : smzxjTitle}
             className="h-auto max-w-[300px]"
           />
         </div>
       </div>
 
       {/* 服务网格 */}
-      {activeMenu === '命书' && (
+      {navState.activeMenu === '命书' && (
         <div className="mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-5">
           {services.map((service) => (
             <div
@@ -96,7 +88,7 @@ export default function WelcomePage({
       )}
 
       {/* 宝阁内容 */}
-      {activeMenu === '宝阁' && (
+      {navState.activeMenu === '宝阁' && (
         <div className="px-5 py-[60px] text-center">
           <div className="mb-5 text-xl text-[#666]">宝阁功能即将上线</div>
           <div className="text-sm text-[#999]">敬请期待更多精彩内容</div>

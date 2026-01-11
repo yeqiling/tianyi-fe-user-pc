@@ -51,10 +51,31 @@ export const userActions = {
     }));
   },
 
+  setSubAccounts: (subAccounts: SubAccount[]) => {
+    userStore.setState((state) => ({
+      ...state,
+      subAccounts,
+    }));
+  },
+
   switchSubAccount: (account: SubAccount) => {
     userStore.setState((state) => ({
       ...state,
       userInfo: account.user,
+    }));
+  },
+
+  setMoney: (money: number) => {
+    userStore.setState((state) => ({
+      ...state,
+      money,
+    }));
+  },
+
+  setVip: (isVip: boolean) => {
+    userStore.setState((state) => ({
+      ...state,
+      isVip,
     }));
   },
 };

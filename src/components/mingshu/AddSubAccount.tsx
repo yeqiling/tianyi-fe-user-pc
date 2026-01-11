@@ -1,17 +1,15 @@
-interface AddSubAccountProps {
-  showModal: boolean
-  onCancel: () => void
-  onUpdateXiaohao: () => void
-}
+import { useStore } from '@tanstack/react-store'
+import { modalActions, modalStore } from '../../stores/modalStore'
 
-export default function AddSubAccount({ showModal, onCancel, onUpdateXiaohao }: AddSubAccountProps) {
-  if (!showModal) return null
+export default function AddSubAccount() {
+  const modalState = useStore(modalStore)
+
+  if (!modalState.AddSubAccountModelShow) return null
 
   const handleSubmit = () => {
     // TODO: Add sub account logic
     console.log('Add sub account')
-    onUpdateXiaohao()
-    onCancel()
+    modalActions.hideAddSubAccount()
   }
 
   return (
@@ -20,7 +18,7 @@ export default function AddSubAccount({ showModal, onCancel, onUpdateXiaohao }: 
         <div className="mb-5 flex items-center justify-between">
           <h2 className="m-0 text-xl font-bold">新增子账户</h2>
           <button
-            onClick={onCancel}
+            onClick={modalActions.hideAddSubAccount}
             className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
@@ -56,7 +54,7 @@ export default function AddSubAccount({ showModal, onCancel, onUpdateXiaohao }: 
 
           <div className="mt-[30px] flex justify-center gap-4">
             <button
-              onClick={onCancel}
+              onClick={modalActions.hideAddSubAccount}
               className="cursor-pointer rounded-md border border-[#ddd] bg-[#f5f5f5] px-5 py-2.5"
             >
               取消
