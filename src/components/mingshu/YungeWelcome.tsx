@@ -34,25 +34,15 @@ export default function YungeWelcome({ onShowBazi, onShowVipModal }: YungeWelcom
   ]
 
   return (
-    <div style={{ padding: '40px', backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+    <div className="min-h-screen bg-[#f8f9fa] p-10">
       {/* 欢迎区域 */}
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <div style={{ 
-          fontSize: '24px', 
-          fontWeight: 'bold', 
-          marginBottom: '20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '10px'
-        }}>
+      <div className="mb-10 text-center">
+        <div className="mb-5 flex items-center justify-center gap-2.5 text-2xl font-bold">
           <span>欢迎回来，{userState.userInfo.userName || '普通用户'}道友</span>
-          <img src={xingIcon} style={{ width: '24px', height: '24px' }} />
-          <span style={{ 
-            fontSize: '14px', 
-            color: userState.isVip ? '#ff6b35' : '#999',
-            fontWeight: 'normal'
-          }}>
+          <img src={xingIcon} className="h-6 w-6" />
+          <span
+            className={`text-sm font-normal ${userState.isVip ? 'text-[#ff6b35]' : 'text-[#999]'}`}
+          >
             {userState.isVip ? 'VIP用户' : ''}
           </span>
         </div>
@@ -60,64 +50,32 @@ export default function YungeWelcome({ onShowBazi, onShowVipModal }: YungeWelcom
         <div>
           <img 
             src={yunTitle}
-            style={{ maxWidth: '300px', height: 'auto' }}
+            className="h-auto max-w-[300px]"
           />
         </div>
       </div>
 
       {/* 运阁服务网格 */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-        gap: '20px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
+      <div className="mx-auto grid max-w-[1200px] grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-5">
         {yungeServices.map((service) => (
           <div
             key={service.name}
             onClick={() => goToService(service.name, service.icon)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '20px',
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              border: '1px solid #e0e0e0'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'
-            }}
+            className="flex cursor-pointer items-center rounded-xl border border-[#e0e0e0] bg-white p-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)] transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.15)]"
           >
             <img 
               src={xing2Icon} 
-              style={{ width: '24px', height: '24px', marginRight: '15px' }}
+              className="mr-[15px] h-6 w-6"
             />
             <img 
               src={service.icon}
-              style={{ width: '40px', height: '40px', marginRight: '20px' }}
+              className="mr-5 h-10 w-10"
             />
             <div>
-              <div style={{ 
-                fontSize: '18px', 
-                fontWeight: 'bold', 
-                marginBottom: '4px',
-                color: '#333'
-              }}>
+              <div className="mb-1 text-lg font-bold text-[#333]">
                 {service.name}
               </div>
-              <div style={{ 
-                fontSize: '14px', 
-                color: '#666' 
-              }}>
+              <div className="text-sm text-[#666]">
                 {service.desc}
               </div>
             </div>

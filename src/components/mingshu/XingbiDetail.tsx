@@ -8,67 +8,29 @@ export default function XingbiDetail({ showModal, money, onClose }: XingbiDetail
   if (!showModal) return null
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 9999
-    }}>
-      <div style={{
-        backgroundColor: '#fff',
-        borderRadius: '12px',
-        padding: '30px',
-        width: '400px',
-        maxWidth: '90vw'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
-        }}>
-          <h2 style={{ margin: 0 }}>星币详情</h2>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
+      <div className="w-[400px] max-w-[90vw] rounded-xl bg-white p-[30px]">
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="m-0 text-xl font-bold">星币详情</h2>
           <button
             onClick={onClose}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '24px',
-              cursor: 'pointer',
-              color: '#666'
-            }}
+            className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
           </button>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '20px' }}>
-          <div style={{
-            fontSize: '48px',
-            fontWeight: 'bold',
-            color: '#ff6b35',
-            marginBottom: '10px'
-          }}>
+        <div className="p-5 text-center">
+          <div className="mb-2.5 text-5xl font-bold text-[#ff6b35]">
             {money}
           </div>
-          <div style={{ fontSize: '16px', color: '#666', marginBottom: '20px' }}>
+          <div className="mb-5 text-base text-[#666]">
             当前星币余额
           </div>
           
-          <div style={{
-            backgroundColor: '#f8f9fa',
-            padding: '20px',
-            borderRadius: '8px',
-            textAlign: 'left'
-          }}>
-            <h4>星币用途：</h4>
-            <ul style={{ margin: 0, paddingLeft: '20px' }}>
+          <div className="rounded-lg bg-[#f8f9fa] p-5 text-left">
+            <h4 className="mb-2 text-base font-bold">星币用途：</h4>
+            <ul className="m-0 list-disc pl-5">
               <li>1星币 = 1次深度对话</li>
               <li>可兑换各类报告</li>
               <li>解锁高级功能</li>
@@ -78,15 +40,7 @@ export default function XingbiDetail({ showModal, money, onClose }: XingbiDetail
 
           <button
             onClick={onClose}
-            style={{
-              marginTop: '20px',
-              padding: '10px 30px',
-              backgroundColor: '#1976d2',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer'
-            }}
+            className="mt-5 cursor-pointer rounded-md border-0 bg-[#1976d2] px-[30px] py-2.5 text-white"
           >
             确定
           </button>

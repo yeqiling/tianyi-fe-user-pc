@@ -70,42 +70,24 @@ export default function BaziSidebar({
   }
 
   return (
-    <div style={{
-      width: collapsed ? '60px' : '300px',
-      backgroundColor: '#fff',
-      borderRight: '1px solid #e0e0e0',
-      transition: 'width 0.3s ease',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%'
-    }}>
+    <div
+      className={`${collapsed ? 'w-[60px]' : 'w-[300px]'} flex h-full flex-col border-r border-[#e0e0e0] bg-white transition-[width] duration-300 ease-in-out`}
+    >
       {/* 顶部标题栏 */}
-      <div style={{
-        padding: '20px',
-        borderBottom: '1px solid #e0e0e0',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-      }}>
+      <div className="flex items-center justify-between border-b border-[#e0e0e0] p-5">
         {!collapsed && (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <img 
+          <div className="flex items-center">
+            <img
               src={titleIcon}
-              style={{ width: '24px', height: '24px', marginRight: '10px' }}
+              className="mr-2.5 h-6 w-6"
             />
-            <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{title}</span>
+            <span className="text-base font-bold">{title}</span>
           </div>
         )}
         
         <button
           onClick={handleVisible}
-          style={{
-            background: 'none',
-            border: 'none',
-            fontSize: '18px',
-            cursor: 'pointer',
-            padding: '4px 8px'
-          }}
+          className="cursor-pointer border-0 bg-transparent px-2 py-1 text-lg"
         >
           {collapsed ? '→' : '←'}
         </button>
@@ -115,60 +97,34 @@ export default function BaziSidebar({
         <>
           {/* 报告区域（仅对 titleArr 中的项显示） */}
           {titleArr.includes(title) && (
-            <div style={{ padding: '20px', borderBottom: '1px solid #e0e0e0' }}>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center',
-                marginBottom: '15px'
-              }}>
-                <span style={{ fontSize: '14px', fontWeight: 'bold' }}>
+            <div className="border-b border-[#e0e0e0] p-5">
+              <div className="mb-[15px] flex items-center justify-between">
+                <span className="text-sm font-bold">
                   {title}报告
                 </span>
                 <button
                   onClick={createNewReport}
-                  style={{
-                    background: 'none',
-                    border: '1px solid #1976d2',
-                    color: '#1976d2',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    fontSize: '12px',
-                    cursor: 'pointer'
-                  }}
+                  className="cursor-pointer rounded border border-[#1976d2] bg-transparent px-2 py-1 text-xs text-[#1976d2]"
                 >
                   + 新报告
                 </button>
               </div>
               
-              <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+              <div className="max-h-[200px] overflow-y-auto">
                 {reportHistoryList.length > 0 ? (
                   reportHistoryList.map((item) => (
                     <div
                       key={item.id}
                       onClick={() => loadReportAndDialogs(item)}
-                      style={{
-                        padding: '10px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        marginBottom: '8px',
-                        backgroundColor: '#f5f5f5'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e3f2fd'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+                      className="mb-2 cursor-pointer rounded bg-[#f5f5f5] p-2.5 hover:bg-[#e3f2fd]"
                     >
-                      <div style={{ fontSize: '13px', fontWeight: 'bold' }}>
+                      <div className="text-[13px] font-bold">
                         {item.title || ''}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div style={{ 
-                    textAlign: 'center', 
-                    color: '#999', 
-                    fontSize: '12px',
-                    padding: '20px 0'
-                  }}>
+                  <div className="py-5 text-center text-xs text-[#999]">
                     暂无报告
                   </div>
                 )}
@@ -178,84 +134,52 @@ export default function BaziSidebar({
 
           {/* 功能列表（非 titleArr 项才显示排盘/报告/对话） */}
           {!titleArr.includes(title) && (
-            <div style={{ padding: '20px', flex: 1 }}>
+            <div className="flex-1 p-5">
               {/* 八字排盘 */}
               {title === '八字排盘' && (
                 <div
                   onClick={() => selectItem(title)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '12px',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    marginBottom: '8px',
-                    backgroundColor: activeItem === title ? '#e3f2fd' : 'transparent'
-                  }}
+                  className={`mb-2 flex cursor-pointer items-center rounded-lg p-3 ${activeItem === title ? 'bg-[#e3f2fd]' : 'bg-transparent'}`}
                 >
-                  <img 
+                  <img
                     src={activeItem === title ? iswdzjIcon : wdzjIcon}
-                    style={{ width: '20px', height: '20px', marginRight: '10px' }}
+                    className="mr-2.5 h-5 w-5"
                   />
-                  <span style={{ fontSize: '14px' }}>{title}</span>
+                  <span className="text-sm">{title}</span>
                 </div>
               )}
 
               {/* 报告 */}
               <div
                 onClick={() => selectItem(`${title}报告`)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  marginBottom: '8px',
-                  backgroundColor: activeItem === `${title}报告` ? '#e3f2fd' : 'transparent'
-                }}
+                className={`mb-2 flex cursor-pointer items-center rounded-lg p-3 ${activeItem === `${title}报告` ? 'bg-[#e3f2fd]' : 'bg-transparent'}`}
               >
-                <img 
+                <img
                   src={activeItem === `${title}报告` ? isbaogaoIcon : baogaoIcon}
-                  style={{ width: '20px', height: '20px', marginRight: '10px' }}
+                  className="mr-2.5 h-5 w-5"
                 />
-                <span style={{ fontSize: '14px' }}>{title}报告</span>
+                <span className="text-sm">{title}报告</span>
               </div>
 
               {/* 对话 */}
               <div
                 onClick={() => selectItem(`${title}对话`)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  marginBottom: '8px',
-                  backgroundColor: activeItem === `${title}对话` ? '#e3f2fd' : 'transparent'
-                }}
+                className={`mb-2 flex cursor-pointer items-center rounded-lg p-3 ${activeItem === `${title}对话` ? 'bg-[#e3f2fd]' : 'bg-transparent'}`}
               >
-                <img 
+                <img
                   src={activeItem === `${title}对话` ? isduihuaIcon : duihuaIcon}
-                  style={{ width: '20px', height: '20px', marginRight: '10px' }}
+                  className="mr-2.5 h-5 w-5"
                 />
-                <span style={{ fontSize: '14px' }}>{title}对话</span>
+                <span className="text-sm">{title}对话</span>
               </div>
             </div>
           )}
 
           {/* 底部返回按钮 */}
-          <div style={{ padding: '20px', borderTop: '1px solid #e0e0e0' }}>
+          <div className="border-t border-[#e0e0e0] p-5">
             <button
               onClick={onBackToMingshu}
-              style={{
-                width: '100%',
-                padding: '10px',
-                backgroundColor: '#f5f5f5',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontSize: '14px'
-              }}
+              className="w-full cursor-pointer rounded-md border border-[#ddd] bg-[#f5f5f5] p-2.5 text-sm"
             >
               返回命书
             </button>

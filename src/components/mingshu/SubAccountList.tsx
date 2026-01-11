@@ -15,116 +15,55 @@ export default function SubAccountList({ showModal, onClose }: SubAccountListPro
   ]
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 9999
-    }}>
-      <div style={{
-        backgroundColor: '#fff',
-        borderRadius: '12px',
-        padding: '30px',
-        width: '500px',
-        maxWidth: '90vw',
-        maxHeight: '80vh',
-        overflow: 'auto'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
-        }}>
-          <h2 style={{ margin: 0 }}>子账户列表</h2>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
+      <div className="max-h-[80vh] w-[500px] max-w-[90vw] overflow-auto rounded-xl bg-white p-[30px]">
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="m-0 text-xl font-bold">子账户列表</h2>
           <button
             onClick={onClose}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '24px',
-              cursor: 'pointer',
-              color: '#666'
-            }}
+            className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
           </button>
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
+        <div className="mb-5">
           {subAccounts.length > 0 ? (
             subAccounts.map((account) => (
               <div
                 key={account.id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '15px',
-                  border: '1px solid #e0e0e0',
-                  borderRadius: '8px',
-                  marginBottom: '10px'
-                }}
+                className="mb-2.5 flex items-center rounded-lg border border-[#e0e0e0] p-[15px]"
               >
                 <img
                   src={account.avatar || touxiangIcon}
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    marginRight: '15px'
-                  }}
+                  className="mr-[15px] h-10 w-10 rounded-full"
                 />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
+                <div className="flex-1">
+                  <div className="mb-1 font-bold">
                     {account.userName}
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div className="text-xs text-[#666]">
                     创建时间: {account.createTime}
                   </div>
                 </div>
                 <button
-                  style={{
-                    padding: '6px 12px',
-                    backgroundColor: '#ff4444',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '12px'
-                  }}
+                  className="cursor-pointer rounded bg-[#ff4444] px-3 py-1.5 text-xs text-white"
                 >
                   删除
                 </button>
               </div>
             ))
           ) : (
-            <div style={{
-              textAlign: 'center',
-              padding: '40px 20px',
-              color: '#666'
-            }}>
+            <div className="px-5 py-10 text-center text-[#666]">
               暂无子账户
             </div>
           )}
         </div>
 
-        <div style={{ textAlign: 'center' }}>
+        <div className="text-center">
           <button
             onClick={onClose}
-            style={{
-              padding: '10px 30px',
-              backgroundColor: '#1976d2',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer'
-            }}
+            className="cursor-pointer rounded-md border-0 bg-[#1976d2] px-[30px] py-2.5 text-white"
           >
             关闭
           </button>

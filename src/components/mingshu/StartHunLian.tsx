@@ -130,66 +130,37 @@ export default function StartHunLian({
   }
 
   return (
-    <div style={{ 
-      padding: '40px', 
-      textAlign: 'center',
-      backgroundColor: '#f8f9fa',
-      minHeight: '100vh'
-    }}>
+    <div className="min-h-screen bg-[#f8f9fa] p-10 text-center">
       {/* 标题 */}
-      <div style={{ marginBottom: '40px' }}>
-        <img 
+      <div className="mb-10">
+        <img
           src={config.titleBg}
-          style={{ maxWidth: '400px', height: 'auto' }}
+          className="mx-auto h-auto max-w-[400px]"
         />
       </div>
 
       {/* 主题图片 */}
-      <div style={{ marginBottom: '40px' }}>
-        <img 
+      <div className="mb-10">
+        <img
           src={config.bg}
-          style={{ 
-            maxWidth: '600px', 
-            height: 'auto',
-            borderRadius: '12px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.1)'
-          }}
+          className="mx-auto h-auto max-w-[600px] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.1)]"
         />
       </div>
 
       {/* 开启按钮区域 */}
-      <div style={{ marginBottom: '40px' }}>
+      <div className="mb-10">
         <button
           onClick={startHunLian}
-          style={{
-            backgroundImage: `url(${config.btnBg})`,
-            backgroundSize: '100% 100%',
-            backgroundRepeat: 'no-repeat',
-            border: 'none',
-            padding: '20px 60px',
-            fontSize: '20px',
-            fontWeight: 'bold',
-            color: '#fff',
-            cursor: 'pointer',
-            marginBottom: '20px',
-            minWidth: '200px',
-            minHeight: '60px'
-          }}
+          style={{ backgroundImage: `url(${config.btnBg})` }}
+          className="mb-5 min-h-[60px] min-w-[200px] cursor-pointer border-0 bg-[length:100%_100%] bg-no-repeat px-[60px] py-5 text-xl font-bold text-white"
         >
           开启{title}
         </button>
         
-        <div style={{ 
-          fontSize: '16px', 
-          color: '#666',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '8px'
-        }}>
+        <div className="flex items-center justify-center gap-2 text-base text-[#666]">
           <span>6000字合盘报告</span>
-          <img src={xingIcon} style={{ width: '20px', height: '20px' }} />
-          <span style={{ color: '#ff3b30', fontWeight: 'bold' }}>
+          <img src={xingIcon} className="h-5 w-5" />
+          <span className="font-bold text-[#ff3b30]">
             {xingbi}星币可兑换
           </span>
         </div>
@@ -197,151 +168,73 @@ export default function StartHunLian({
 
       {/* 弹窗 - 简化版表单 */}
       {modelShow && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 9999
-        }}>
-          <div style={{
-            backgroundColor: '#fff',
-            borderRadius: '12px',
-            padding: '30px',
-            width: '500px',
-            maxWidth: '90vw',
-            maxHeight: '80vh',
-            overflow: 'auto'
-          }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
+          <div className="max-h-[80vh] w-[500px] max-w-[90vw] overflow-auto rounded-xl bg-white p-[30px]">
+            <h3 className="mb-5 text-center text-lg font-bold">
               完善信息 - {title}
             </h3>
             
             {/* 简化的表单 */}
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-                姓名：
-              </label>
+            <div className="mb-5">
+              <label className="mb-2 block font-bold">姓名：</label>
               <input
                 type="text"
                 value={formData.nickname}
                 onChange={(e) => onFormDataChange({ nickname: e.target.value })}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ddd',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  boxSizing: 'border-box'
-                }}
+                className="w-full rounded-md border border-[#ddd] p-2.5 text-sm"
               />
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-                性别：
-              </label>
+            <div className="mb-5">
+              <label className="mb-2 block font-bold">性别：</label>
               <select
                 value={formData.gender}
                 onChange={(e) => onFormDataChange({ gender: e.target.value })}
-                style={{
-                  width: '100%',
-                  padding: '10px',
-                  border: '1px solid #ddd',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  boxSizing: 'border-box'
-                }}
+                className="w-full rounded-md border border-[#ddd] p-2.5 text-sm"
               >
                 <option value="男">男</option>
                 <option value="女">女</option>
               </select>
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-                出生日期：
-              </label>
-              <div style={{ display: 'flex', gap: '10px' }}>
+            <div className="mb-5">
+              <label className="mb-2 block font-bold">出生日期：</label>
+              <div className="flex gap-2.5">
                 <input
                   type="number"
                   placeholder="年"
                   value={formData.year}
                   onChange={(e) => onFormDataChange({ year: e.target.value })}
-                  style={{
-                    flex: 1,
-                    padding: '10px',
-                    border: '1px solid #ddd',
-                    borderRadius: '6px',
-                    fontSize: '14px'
-                  }}
+                  className="flex-1 rounded-md border border-[#ddd] p-2.5 text-sm"
                 />
                 <input
                   type="number"
                   placeholder="月"
                   value={formData.month}
                   onChange={(e) => onFormDataChange({ month: e.target.value })}
-                  style={{
-                    flex: 1,
-                    padding: '10px',
-                    border: '1px solid #ddd',
-                    borderRadius: '6px',
-                    fontSize: '14px'
-                  }}
+                  className="flex-1 rounded-md border border-[#ddd] p-2.5 text-sm"
                 />
                 <input
                   type="number"
                   placeholder="日"
                   value={formData.day}
                   onChange={(e) => onFormDataChange({ day: e.target.value })}
-                  style={{
-                    flex: 1,
-                    padding: '10px',
-                    border: '1px solid #ddd',
-                    borderRadius: '6px',
-                    fontSize: '14px'
-                  }}
+                  className="flex-1 rounded-md border border-[#ddd] p-2.5 text-sm"
                 />
               </div>
             </div>
 
             {/* 按钮组 */}
-            <div style={{ 
-              display: 'flex', 
-              gap: '15px', 
-              justifyContent: 'center',
-              marginTop: '30px'
-            }}>
+            <div className="mt-[30px] flex justify-center gap-4">
               <button
                 onClick={onCancel}
-                style={{
-                  padding: '12px 30px',
-                  backgroundColor: '#f5f5f5',
-                  border: '1px solid #ddd',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontSize: '14px'
-                }}
+                className="cursor-pointer rounded-md border border-[#ddd] bg-[#f5f5f5] px-[30px] py-3 text-sm"
               >
                 取消
               </button>
               <button
                 onClick={handleSubmit}
-                style={{
-                  padding: '12px 30px',
-                  backgroundColor: '#1976d2',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  fontWeight: 'bold'
-                }}
+                className="cursor-pointer rounded-md border-0 bg-[#1976d2] px-[30px] py-3 text-sm font-bold text-white"
               >
                 开始测算
               </button>

@@ -1,16 +1,11 @@
 export default function BaziPaipan() {
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="p-5">
       <h2>八字排盘</h2>
-      <div style={{ 
-        backgroundColor: '#f8f9fa', 
-        padding: '40px', 
-        borderRadius: '8px',
-        textAlign: 'center'
-      }}>
+      <div className="rounded-lg bg-[#f8f9fa] p-10 text-center">
         <p>八字排盘功能开发中...</p>
         <p>将包含：</p>
-        <ul style={{ textAlign: 'left', display: 'inline-block' }}>
+        <ul className="inline-block text-left">
           <li>生辰信息输入</li>
           <li>八字排盘显示</li>
           <li>五行分析</li>

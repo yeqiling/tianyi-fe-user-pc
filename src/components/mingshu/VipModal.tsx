@@ -44,79 +44,33 @@ export default function VipModal({
   if (!visible) return null
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 9999,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center">
       {/* 遮罩层 */}
       <div 
         onClick={hide}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)'
-        }}
+        className="absolute inset-0 bg-black/50"
       />
       
       {/* 弹窗内容 */}
-      <div style={{
-        position: 'relative',
-        backgroundColor: '#fff',
-        borderRadius: '12px',
-        width: '800px',
-        maxWidth: '90vw',
-        maxHeight: '90vh',
-        overflow: 'hidden',
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
-      }}>
+      <div className="relative max-h-[90vh] w-[800px] max-w-[90vw] overflow-hidden rounded-xl bg-white shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
         {/* 标题栏 */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '20px 30px',
-          borderBottom: '1px solid #e0e0e0',
-          backgroundColor: '#f8f9fa'
-        }}>
-          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 'bold' }}>
+        <div className="flex items-center justify-between border-b border-[#e0e0e0] bg-[#f8f9fa] px-[30px] py-5">
+          <h2 className="m-0 text-xl font-bold">
             天乙神算 VIP会员
           </h2>
           <button
             onClick={hide}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '24px',
-              cursor: 'pointer',
-              color: '#666'
-            }}
+            className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
           </button>
         </div>
 
         {/* 内容区 */}
-        <div style={{
-          display: 'flex',
-          minHeight: '500px'
-        }}>
+        <div className="flex min-h-[500px]">
           {/* 左侧权益列表 */}
-          <div style={{
-            flex: 1,
-            padding: '30px',
-            backgroundColor: '#f8f9fa'
-          }}>
-            <div style={{ marginBottom: '20px' }}>
+          <div className="flex-1 bg-[#f8f9fa] p-[30px]">
+            <div className="mb-5">
               {[
                 'VIP会员资格，长期有效',
                 '获得【命书】1.5万字报告（性格 / 事业 / 财富 / 婚恋 / 健康）',
@@ -124,21 +78,17 @@ export default function VipModal({
                 '会员每月惊喜福利',
                 `原价: ¥268.00，早鸟价限时福利: ¥${vipMoney} 🔥`
               ].map((benefit, index) => (
-                <div key={index} style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  marginBottom: '15px',
-                  fontSize: '14px',
-                  lineHeight: '1.5'
-                }}>
+                <div
+                  key={index}
+                  className="mb-[15px] flex items-start text-sm leading-[1.5]"
+                >
                   <img 
                     src={yesIcon} 
-                    style={{ width: '16px', height: '16px', marginRight: '10px', marginTop: '2px' }}
+                    className="mr-2.5 mt-0.5 h-4 w-4"
                   />
-                  <span style={{ 
-                    color: index === 4 ? '#333' : '#666',
-                    fontWeight: index === 4 ? 'bold' : 'normal'
-                  }}>
+                  <span
+                    className={index === 4 ? 'font-bold text-[#333]' : 'text-[#666]'}
+                  >
                     {benefit}
                   </span>
                 </div>
@@ -146,40 +96,28 @@ export default function VipModal({
             </div>
 
             {/* 二维码展示区域 */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              marginTop: '30px'
-            }}>
-              <div style={{ textAlign: 'center' }}>
+            <div className="mt-[30px] flex justify-around">
+              <div className="text-center">
                 <img 
                   src={qrPlaceholder} 
-                  style={{ width: '80px', height: '80px', marginBottom: '8px' }}
+                  className="mb-2 h-20 w-20"
                 />
-                <div style={{ fontSize: '12px', color: '#666' }}>微信扫码</div>
+                <div className="text-xs text-[#666]">微信扫码</div>
               </div>
-              <div style={{ textAlign: 'center' }}>
+              <div className="text-center">
                 <img 
                   src={qrPlaceholder} 
-                  style={{ width: '80px', height: '80px', marginBottom: '8px' }}
+                  className="mb-2 h-20 w-20"
                 />
-                <div style={{ fontSize: '12px', color: '#666' }}>支付宝扫码</div>
+                <div className="text-xs text-[#666]">支付宝扫码</div>
               </div>
             </div>
           </div>
 
           {/* 右侧支付区域 */}
-          <div style={{
-            width: '300px',
-            padding: '30px',
-            borderLeft: '1px solid #e0e0e0'
-          }}>
+          <div className="w-[300px] border-l border-[#e0e0e0] p-[30px]">
             {/* 支付方式切换 */}
-            <div style={{
-              display: 'flex',
-              marginBottom: '30px',
-              borderBottom: '1px solid #e0e0e0'
-            }}>
+            <div className="mb-[30px] flex border-b border-[#e0e0e0]">
               {[
                 { key: 'alipay', label: '支付宝' },
                 { key: 'weixin', label: '微信支付' },
@@ -188,16 +126,7 @@ export default function VipModal({
                 <button
                   key={method.key}
                   onClick={() => setPaymentMethod(method.key as any)}
-                  style={{
-                    flex: 1,
-                    padding: '10px',
-                    background: 'none',
-                    border: 'none',
-                    borderBottom: paymentMethod === method.key ? '2px solid #1976d2' : '2px solid transparent',
-                    color: paymentMethod === method.key ? '#1976d2' : '#666',
-                    cursor: 'pointer',
-                    fontSize: '14px'
-                  }}
+                  className={`flex-1 cursor-pointer border-0 border-b-2 bg-transparent py-2.5 text-sm ${paymentMethod === method.key ? 'border-[#1976d2] text-[#1976d2]' : 'border-transparent text-[#666]'}`}
                 >
                   {method.label}
                 </button>
@@ -206,20 +135,10 @@ export default function VipModal({
 
             {/* 支付内容 */}
             {paymentMethod === 'alipay' && (
-              <div style={{ textAlign: 'center' }}>
+              <div className="text-center">
                 <button
                   onClick={pay}
-                  style={{
-                    width: '100%',
-                    padding: '15px',
-                    backgroundColor: '#1976d2',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    cursor: 'pointer'
-                  }}
+                  className="w-full cursor-pointer rounded-lg border-0 bg-[#1976d2] p-[15px] text-base font-bold text-white"
                 >
                   立即开通
                 </button>
@@ -227,25 +146,15 @@ export default function VipModal({
             )}
 
             {paymentMethod === 'weixin' && (
-              <div style={{ textAlign: 'center' }}>
+              <div className="text-center">
                 <button
                   onClick={pay}
                   disabled
-                  style={{
-                    width: '100%',
-                    padding: '15px',
-                    backgroundColor: '#ccc',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    cursor: 'not-allowed'
-                  }}
+                  className="w-full cursor-not-allowed rounded-lg border-0 bg-[#ccc] p-[15px] text-base font-bold text-white"
                 >
                   立即开通
                 </button>
-                <div style={{ fontSize: '12px', color: '#999', marginTop: '10px' }}>
+                <div className="mt-2.5 text-xs text-[#999]">
                   微信支付暂未开放
                 </div>
               </div>
@@ -258,29 +167,11 @@ export default function VipModal({
                   value={redeemCode}
                   onChange={(e) => setRedeemCode(e.target.value)}
                   placeholder="请输入兑换码"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    border: '1px solid #ddd',
-                    borderRadius: '6px',
-                    fontSize: '14px',
-                    marginBottom: '15px',
-                    boxSizing: 'border-box'
-                  }}
+                  className="mb-[15px] w-full rounded-md border border-[#ddd] p-3 text-sm"
                 />
                 <button
                   onClick={handleRedeemCode}
-                  style={{
-                    width: '100%',
-                    padding: '15px',
-                    backgroundColor: redeemCode.trim() ? '#1976d2' : '#ccc',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    cursor: redeemCode.trim() ? 'pointer' : 'not-allowed'
-                  }}
+                  className={`w-full rounded-lg border-0 p-[15px] text-base font-bold text-white ${redeemCode.trim() ? 'cursor-pointer bg-[#1976d2]' : 'cursor-not-allowed bg-[#ccc]'}`}
                   disabled={!redeemCode.trim()}
                 >
                   兑换
@@ -289,17 +180,11 @@ export default function VipModal({
             )}
 
             {/* 价格显示 */}
-            <div style={{
-              textAlign: 'center',
-              marginTop: '30px',
-              padding: '20px',
-              backgroundColor: '#f8f9fa',
-              borderRadius: '8px'
-            }}>
-              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ff3b30' }}>
+            <div className="mt-[30px] rounded-lg bg-[#f8f9fa] p-5 text-center">
+              <div className="text-2xl font-bold text-[#ff3b30]">
                 ¥{vipMoney}
               </div>
-              <div style={{ fontSize: '12px', color: '#999', textDecoration: 'line-through' }}>
+              <div className="text-xs text-[#999] line-through">
                 原价 ¥268
               </div>
             </div>

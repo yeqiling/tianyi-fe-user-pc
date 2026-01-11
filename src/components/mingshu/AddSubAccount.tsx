@@ -15,125 +15,55 @@ export default function AddSubAccount({ showModal, onCancel, onUpdateXiaohao }: 
   }
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 9999
-    }}>
-      <div style={{
-        backgroundColor: '#fff',
-        borderRadius: '12px',
-        padding: '30px',
-        width: '400px',
-        maxWidth: '90vw'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px'
-        }}>
-          <h2 style={{ margin: 0 }}>新增子账户</h2>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
+      <div className="w-[400px] max-w-[90vw] rounded-xl bg-white p-[30px]">
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="m-0 text-xl font-bold">新增子账户</h2>
           <button
             onClick={onCancel}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '24px',
-              cursor: 'pointer',
-              color: '#666'
-            }}
+            className="cursor-pointer border-0 bg-transparent text-2xl text-[#666]"
           >
             ×
           </button>
         </div>
 
-        <div style={{ padding: '20px 0' }}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-              用户名：
-            </label>
+        <div className="py-5">
+          <div className="mb-5">
+            <label className="mb-2 block font-bold">用户名：</label>
             <input
               type="text"
               placeholder="请输入子账户用户名"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                boxSizing: 'border-box'
-              }}
+              className="w-full rounded-md border border-[#ddd] p-2.5 text-sm"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-              性别：
-            </label>
-            <select
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                boxSizing: 'border-box'
-              }}
-            >
+          <div className="mb-5">
+            <label className="mb-2 block font-bold">性别：</label>
+            <select className="w-full rounded-md border border-[#ddd] p-2.5 text-sm">
               <option value="">请选择性别</option>
               <option value="男">男</option>
               <option value="女">女</option>
             </select>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-              出生日期：
-            </label>
+          <div className="mb-5">
+            <label className="mb-2 block font-bold">出生日期：</label>
             <input
               type="date"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                fontSize: '14px',
-                boxSizing: 'border-box'
-              }}
+              className="w-full rounded-md border border-[#ddd] p-2.5 text-sm"
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '30px' }}>
+          <div className="mt-[30px] flex justify-center gap-4">
             <button
               onClick={onCancel}
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#f5f5f5',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                cursor: 'pointer'
-              }}
+              className="cursor-pointer rounded-md border border-[#ddd] bg-[#f5f5f5] px-5 py-2.5"
             >
               取消
             </button>
             <button
               onClick={handleSubmit}
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#1976d2',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer'
-              }}
+              className="cursor-pointer rounded-md border-0 bg-[#1976d2] px-5 py-2.5 text-white"
             >
               创建
             </button>

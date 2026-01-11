@@ -39,99 +39,56 @@ export default function MingShuSidebar({
 }: MingShuSidebarProps) {
   return (
     <div
-      style={{
-        width: '280px',
-        backgroundColor: '#fff',
-        borderRight: '1px solid #e0e0e0',
-        display: 'flex',
-        flexDirection: 'column'
-      }}
+      className="flex w-[280px] flex-col border-r border-[#e0e0e0] bg-white"
     >
       {/* 用户信息区域 */}
-      <div style={{ padding: '20px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <img
+      <div className="p-5">
+        <div className="mb-5 text-center">
+          <img
             src={iconCloum}
             alt="logo"
-            style={{ width: '60px', height: '60px' }}
+            className="h-[60px] w-[60px]"
           />
         </div>
 
-        <div
-          style={{
-            height: '1px',
-            backgroundColor: '#e0e0e0',
-            margin: '20px 0'
-          }}
-        />
+        <div className="my-5 h-px bg-[#e0e0e0]" />
 
         {/* 用户头像和信息 */}
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <div style={{ marginBottom: '10px' }}>
+        <div className="mb-5 text-center">
+          <div className="mb-2.5">
             <img
               src={userInfo?.avatar || touxiangIcon}
               alt="avatar"
-              style={{
-                width: '60px',
-                height: '60px',
-                borderRadius: '50%',
-                objectFit: 'cover'
-              }}
+              className="h-[60px] w-[60px] rounded-full object-cover"
             />
             <div
-              style={{
-                fontSize: '14px',
-                fontWeight: 'bold',
-                marginTop: '8px'
-              }}
+              className="mt-2 text-sm font-bold"
             >
               {userInfo?.userName || '普通用户'}
             </div>
           </div>
-          <div style={{ fontSize: '12px', color: '#666' }}>当前用户</div>
+          <div className="text-xs text-[#666]">当前用户</div>
         </div>
 
         {/* 子账号列表 */}
         {subAccounts.length > 0 && (
           <div
-            style={{
-              maxHeight: '200px',
-              overflowY: 'auto',
-              marginBottom: '20px'
-            }}
+            className="mb-5 max-h-[200px] overflow-y-auto"
           >
             {subAccounts.map((item) => (
               <div
                 key={item.user.userId}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '8px',
-                  cursor: 'pointer',
-                  borderRadius: '4px',
-                  marginBottom: '4px'
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = '#f0f0f0')
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = 'transparent')
-                }
+                className="mb-1 flex cursor-pointer items-center rounded p-2 hover:bg-[#f0f0f0]"
               >
                 <img
                   src={lIcon}
-                  style={{ width: '16px', marginRight: '8px' }}
+                  className="mr-2 w-4"
                 />
                 <img
                   src={touxiangIcon}
-                  style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '50%',
-                    marginRight: '8px'
-                  }}
+                  className="mr-2 h-6 w-6 rounded-full"
                 />
-                <span style={{ fontSize: '12px' }}>
+                <span className="text-xs">
                   {item.user.userName || '普通用户'}
                 </span>
               </div>
@@ -142,39 +99,22 @@ export default function MingShuSidebar({
         {/* 新增用户按钮 */}
         <div
           onClick={onAddSubAccount}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '10px',
-            cursor: 'pointer',
-            borderRadius: '4px',
-            fontSize: '14px'
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = '#f0f0f0')
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = 'transparent')
-          }
+          className="flex cursor-pointer items-center rounded p-2.5 text-sm hover:bg-[#f0f0f0]"
         >
           <img
             src={addUserIcon}
-            style={{ width: '20px', marginRight: '8px' }}
+            className="mr-2 w-5"
           />
           新增用户
         </div>
       </div>
 
       <div
-        style={{
-          height: '1px',
-          backgroundColor: '#e0e0e0',
-          margin: '0 20px'
-        }}
+        className="mx-5 h-px bg-[#e0e0e0]"
       />
 
       {/* 菜单列表 */}
-      <div style={{ padding: '20px', flex: 1 }}>
+      <div className="flex-1 p-5">
         {[
           { key: '命书', icon: msIcon, activeIcon: msActiveIcon },
           { key: '运阁', icon: ygIcon, activeIcon: ygActiveIcon },
@@ -183,27 +123,14 @@ export default function MingShuSidebar({
           <div
             key={menu.key}
             onClick={() => onSwitchMenu(menu.key)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '12px',
-              cursor: 'pointer',
-              borderRadius: '8px',
-              marginBottom: '8px',
-              backgroundColor:
-                activeMenu === menu.key ? '#e3f2fd' : 'transparent',
-              color: activeMenu === menu.key ? '#1976d2' : '#333'
-            }}
+            className={`mb-2 flex cursor-pointer items-center rounded-lg p-3 ${activeMenu === menu.key ? 'bg-[#e3f2fd] text-[#1976d2]' : 'bg-transparent text-[#333]'}`}
           >
             <img
               src={activeMenu === menu.key ? menu.activeIcon : menu.icon}
-              style={{ width: '24px', height: '24px', marginRight: '12px' }}
+              className="mr-3 h-6 w-6"
             />
             <span
-              style={{
-                fontSize: '14px',
-                fontWeight: activeMenu === menu.key ? 'bold' : 'normal'
-              }}
+              className={`text-sm ${activeMenu === menu.key ? 'font-bold' : 'font-normal'}`}
             >
               {menu.key}
             </span>
@@ -214,47 +141,27 @@ export default function MingShuSidebar({
       {/* 会员信息 */}
       <div
         onClick={onShowMyVip}
-        style={{
-          padding: '20px',
-          borderTop: '1px solid #e0e0e0',
-          cursor: 'pointer'
-        }}
+        className="cursor-pointer border-t border-[#e0e0e0] p-5"
       >
         <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: '8px'
-          }}
+          className="mb-2 flex items-center justify-center"
         >
           <img
             src={xingIcon}
-            style={{ width: '20px', marginRight: '8px' }}
+            className="mr-2 h-5 w-5"
           />
-          <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
-            {money}
-          </span>
+          <span className="text-base font-bold">{money}</span>
         </div>
-        <div style={{ textAlign: 'center', fontSize: '12px', color: '#666' }}>
+        <div className="text-center text-xs text-[#666]">
           我的会员
         </div>
       </div>
 
       {/* 客服咨询按钮 */}
-      <div style={{ padding: '20px' }}>
+      <div className="p-5">
         <button
           onClick={() => onSwitchMenu('kefu')}
-          style={{
-            width: '100%',
-            padding: '12px',
-            backgroundColor: activeMenu === 'kefu' ? '#1976d2' : '#f5f5f5',
-            color: activeMenu === 'kefu' ? '#fff' : '#333',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px'
-          }}
+          className={`w-full cursor-pointer rounded-lg border-0 p-3 text-sm ${activeMenu === 'kefu' ? 'bg-[#1976d2] text-white' : 'bg-[#f5f5f5] text-[#333]'}`}
         >
           客服·咨询
         </button>
