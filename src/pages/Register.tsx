@@ -3,7 +3,13 @@ import { useStore } from '@tanstack/react-store';
 import { useNavigate } from '@tanstack/react-router';
 import { registerStore, registerActions, userActions } from '@/stores';
 import { apiService } from '@/services/api';
-import { RegisterHeader, RegisterForm, RegisterFooter } from '@/components/register';
+import {
+  RegisterHeader,
+  RegisterForm,
+  RegisterFooter,
+} from '@/components/register';
+
+import { toast } from 'sonner';
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -14,19 +20,19 @@ export function RegisterPage() {
 
     const phoneReg = /^1[3-9]\d{9}$/;
     if (!registerForm.phone) {
-      alert('请输入手机号');
+      toast('请输入手机号');
       return;
     }
     if (!phoneReg.test(registerForm.phone)) {
-      alert('手机号格式不正确');
+      toast('手机号格式不正确');
       return;
     }
     if (!registerForm.msg) {
-      alert('请输入验证码');
+      toast('请输入验证码');
       return;
     }
     if (!registerForm.password) {
-      alert('请输入密码');
+      toast('请输入密码');
       return;
     }
 
@@ -41,7 +47,7 @@ export function RegisterPage() {
       if (result.code === 0) {
         const { token, user, expire } = result;
         if (!token) {
-          alert('注册异常：缺少 token');
+          toast('注册异常：缺少 token');
           return;
         }
 
@@ -50,15 +56,15 @@ export function RegisterPage() {
         localStorage.setItem('TOKEN_EXPIRE_TIME', expireTime.toString());
         localStorage.setItem('user', JSON.stringify(user));
 
-        alert('注册成功');
+        toast('注册成功');
         userActions.login(user);
         navigate({ to: '/mingshu' });
       } else {
-        alert(result.msg || '注册失败');
+        toast(result.msg || '注册失败');
       }
     } catch (error) {
       console.error('注册异常:', error);
-      alert('网络错误，请稍后重试');
+      toast('网络错误，请稍后重试');
     } finally {
       registerActions.setLoading(false);
     }
@@ -67,7 +73,7 @@ export function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 p-5 px-7 box-border">
       <RegisterHeader />
-      
+
       <RegisterForm
         phone={registerForm.phone}
         verifyCode={registerForm.msg}
@@ -75,7 +81,9 @@ export function RegisterPage() {
         loading={loading}
         onPhoneChange={(value) => registerActions.updateForm('phone', value)}
         onVerifyCodeChange={(value) => registerActions.updateForm('msg', value)}
-        onPasswordChange={(value) => registerActions.updateForm('password', value)}
+        onPasswordChange={(value) =>
+          registerActions.updateForm('password', value)
+        }
         onSubmit={handleRegister}
       />
 

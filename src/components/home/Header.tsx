@@ -1,6 +1,9 @@
 import { useStore } from '@tanstack/react-store';
 import { useNavigate } from '@tanstack/react-router';
-import { navigationStore, setActiveNav } from '../../stores/navigationStore';
+import {
+  homeNavigationStore,
+  setActiveNav,
+} from '../../stores/homeNavigationStore';
 import {
   languageStore,
   setLanguage as setLang,
@@ -14,7 +17,7 @@ import iconLogo from '@/assets/images/icon_logo.png';
 import lan from '@/assets/images/lan.png';
 
 export default function Header() {
-  const { activeNav } = useStore(navigationStore);
+  const { activeNav } = useStore(homeNavigationStore);
   const { currentLanguage } = useStore(languageStore);
   const navigate = useNavigate();
 

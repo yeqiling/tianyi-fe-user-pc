@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { apiService } from '@/services/api.ts';
 
 interface AuthCodeProps {
   phone: string;
@@ -22,18 +24,18 @@ export function AuthCode({ phone }: AuthCodeProps) {
 
     const phoneReg = /^1[3-9]\d{9}$/;
     if (!phoneReg.test(phone)) {
-      alert('手机号格式不正确');
+      toast('手机号格式不正确');
       return;
     }
 
     try {
       setLoading(true);
       // 这里应该调用发送验证码的API
-      // await apiService.sendVerifyCode(phone)
+      await apiService.sendVerifyCode(phone);
       setCountdown(60);
     } catch (error) {
       console.error('发送验证码失败:', error);
-      alert('发送验证码失败');
+      toast('发送验证码失败');
     } finally {
       setLoading(false);
     }

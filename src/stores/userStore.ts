@@ -1,27 +1,28 @@
 import { Store } from '@tanstack/store';
 
 export interface UserInfo {
-  userId: string;
-  userName: string;
+  userId?: string;
+  userName?: string;
   avatar?: string;
   phone?: string;
 }
 
 export interface SubAccount {
   user: UserInfo;
-  isActive?: boolean;
 }
 
 export interface UserState {
-  isLogin: boolean;
-  userInfo: UserInfo | null;
+  userInfo: UserInfo;
   subAccounts: SubAccount[];
+  money: number;
+  isVip: boolean;
 }
 
 export const userStore = new Store<UserState>({
-  isLogin: false,
-  userInfo: null,
+  userInfo: {},
   subAccounts: [],
+  money: 0,
+  isVip: false,
 });
 
 // Actions
@@ -29,7 +30,6 @@ export const userActions = {
   login: (userInfo: UserInfo) => {
     userStore.setState((state) => ({
       ...state,
-      isLogin: true,
       userInfo,
     }));
   },
@@ -37,9 +37,10 @@ export const userActions = {
   logout: () => {
     userStore.setState((state) => ({
       ...state,
-      isLogin: false,
-      userInfo: null,
+      userInfo: {},
       subAccounts: [],
+      money: 0,
+      isVip: false,
     }));
   },
 

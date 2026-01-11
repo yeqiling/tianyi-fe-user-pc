@@ -1,23 +1,26 @@
-import { useStore } from '@tanstack/react-store'
-import { navigationStore, setActiveNav } from '../stores/navigationStore'
-import Header from '../components/home/Header'
-import HomeView from '../components/home/HomeView'
-import ProductView from '../components/home/ProductView'
-import AboutView from '../components/home/AboutView'
-import AboutMy from '../components/home/AboutMy'
-import ProductDetail from '../components/home/ProductDetail'
+import { useStore } from '@tanstack/react-store';
+import {
+  homeNavigationStore,
+  setActiveNav,
+} from '../stores/homeNavigationStore';
+import Header from '../components/home/Header';
+import HomeView from '../components/home/HomeView';
+import ProductView from '../components/home/ProductView';
+import AboutView from '../components/home/AboutView';
+import AboutMy from '../components/home/AboutMy';
+import ProductDetail from '../components/home/ProductDetail';
 
 export default function HomePage() {
-  const { activeNav } = useStore(navigationStore)
+  const { activeNav } = useStore(homeNavigationStore);
 
   const goDetail = (num: number) => {
-    setActiveNav(num)
-  }
+    setActiveNav(num);
+  };
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      
+
       <main>
         {activeNav === 0 && <HomeView />}
         {activeNav === 1 && <ProductView />}
@@ -26,5 +29,5 @@ export default function HomePage() {
         {activeNav === 4 && <ProductDetail onGoDetail={goDetail} />}
       </main>
     </div>
-  )
+  );
 }

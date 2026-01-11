@@ -10,6 +10,8 @@ import {
   ForgotPasswordModal,
 } from '@/components/login';
 
+import { toast } from 'sonner';
+
 export function LoginPage() {
   const navigate = useNavigate();
   const { loginForm, forgetPwdForm, passwordModelShow, loading } =
@@ -20,15 +22,15 @@ export function LoginPage() {
 
     const phoneReg = /^1[3-9]\d{9}$/;
     if (!loginForm.phone) {
-      alert('请输入手机号');
+      toast('请输入手机号');
       return;
     }
     if (!phoneReg.test(loginForm.phone)) {
-      alert('手机号格式不正确');
+      toast('手机号格式不正确');
       return;
     }
     if (!loginForm.password) {
-      alert('请输入密码');
+      toast('请输入密码');
       return;
     }
 
@@ -43,7 +45,7 @@ export function LoginPage() {
       if (result.code === 0) {
         const { token, user, expire } = result;
         if (!token) {
-          alert('登录异常：缺少 token');
+          toast('登录异常：缺少 token');
           return;
         }
 
@@ -52,15 +54,15 @@ export function LoginPage() {
         localStorage.setItem('TOKEN_EXPIRE_TIME', expireTime.toString());
         localStorage.setItem('user', JSON.stringify(user));
 
-        alert('登录成功');
+        toast('登录成功');
         userActions.login(user);
         navigate({ to: '/' });
       } else {
-        alert(result.msg || '登录失败');
+        toast(result.msg || '登录失败');
       }
     } catch (error) {
       console.error('登录异常:', error);
-      alert('网络错误，请稍后重试');
+      toast('网络错误，请稍后重试');
     } finally {
       loginActions.setLoading(false);
     }
@@ -76,15 +78,15 @@ export function LoginPage() {
       });
 
       if (result.code === 0) {
-        alert('密码重置成功');
+        toast('密码重置成功');
         loginActions.resetForm();
         loginActions.hidePasswordModal();
       } else {
-        alert(result.msg || '重置失败');
+        toast(result.msg || '重置失败');
       }
     } catch (error) {
       console.error('重置密码失败:', error);
-      alert('网络错误，请稍后重试');
+      toast('网络错误，请稍后重试');
     } finally {
       loginActions.setLoading(false);
     }
