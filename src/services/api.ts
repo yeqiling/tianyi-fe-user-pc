@@ -1,9 +1,71 @@
+import { toast } from 'sonner';
+import { clearAuth, isTokenValid } from '@/utils/auth';
+
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   'https://tianyi.fangqiuwangluo.com/sqx_fast';
 
+const PUBLIC_ENDPOINT_PREFIXES = [
+  '/app/Login/sendMsg',
+  '/app/Login/forgetPwd',
+  '/app/Login/registerCode',
+  '/app/Login/login',
+] as const;
+
+const TOAST_SILENT_PREFIXES = [
+  '/app/Login/sendMsg',
+  '/app/Login/forgetPwd',
+  '/app/Login/registerCode',
+  '/app/Login/login',
+] as const;
+
+let isRedirecting = false;
+
+const matchesEndpoint = (endpoint: string, prefixes: readonly string[]) =>
+  prefixes.some((prefix) => endpoint.startsWith(prefix));
+
+const isPublicEndpoint = (endpoint: string) =>
+  matchesEndpoint(endpoint, PUBLIC_ENDPOINT_PREFIXES);
+
+const shouldToastForEndpoint = (endpoint: string) =>
+  !matchesEndpoint(endpoint, TOAST_SILENT_PREFIXES);
+
+const handleAuthExpired = () => {
+  if (isRedirecting) {
+    return;
+  }
+
+  isRedirecting = true;
+  clearAuth();
+  toast('登录已过期，请重新登录');
+
+  if (typeof window !== 'undefined') {
+    window.setTimeout(() => {
+      window.location.assign('/login');
+    }, 1500);
+  }
+};
+
+const assertAuth = (endpoint: string) => {
+  if (isPublicEndpoint(endpoint)) {
+    return;
+  }
+
+  if (isTokenValid()) {
+    return;
+  }
+
+  handleAuthExpired();
+  throw new Error('TOKEN_EXPIRED');
+};
+
+type JsonPayload = {
+  code?: number;
+  msg?: string;
+};
+
 class ApiService {
-  private baseURL: string;
+  private readonly baseURL: string;
 
   constructor(baseURL: string = API_BASE_URL) {
     this.baseURL = baseURL;
@@ -24,29 +86,82 @@ class ApiService {
     return params.toString();
   }
 
+  private buildHeaders(
+    endpoint: string,
+    initHeaders?: HeadersInit
+  ): Headers {
+    const headers = new Headers(initHeaders);
+
+    if (!headers.has('Content-Type')) {
+      headers.set('Content-Type', 'application/json');
+    }
+
+    if (!isPublicEndpoint(endpoint)) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+        headers.set('token', token);
+      }
+    }
+
+    return headers;
+  }
+
+  private async parseResponse<T>(
+    endpoint: string,
+    response: Response
+  ): Promise<T> {
+    const contentType = response.headers.get('content-type') || '';
+    const isJson = contentType.includes('application/json');
+    let payload: unknown = null;
+
+    if (isJson) {
+      try {
+        payload = await response.json();
+      } catch {
+        payload = null;
+      }
+    } else {
+      payload = await response.text();
+    }
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        handleAuthExpired();
+      }
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    if (isJson && payload && typeof payload === 'object') {
+      const data = payload as JsonPayload;
+
+      if (shouldToastForEndpoint(endpoint) && data.code !== 0 && data.msg) {
+        toast(data.msg);
+      }
+
+      if (data.code === 401) {
+        handleAuthExpired();
+      }
+    }
+
+    return payload as T;
+  }
+
   private async request<T>(
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`;
-    const token = localStorage.getItem('token');
+    assertAuth(endpoint);
 
-    const config: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token && { Authorization: `Bearer ${token}` }),
-        ...options.headers,
-      },
-      ...options,
-    };
+    const { headers: initHeaders, ...rest } = options;
+    const headers = this.buildHeaders(endpoint, initHeaders);
 
-    const response = await fetch(url, config);
+    const response = await fetch(`${this.baseURL}${endpoint}`, {
+      ...rest,
+      headers,
+    });
 
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
-    }
-
-    return response.json();
+    return this.parseResponse<T>(endpoint, response);
   }
 
   // 用户相关API
@@ -110,8 +225,48 @@ class ApiService {
     });
   }
 
-  async getUserInfo(): Promise<any> {
-    return this.request('/user/info');
+  async getUserInfoById(userId: string): Promise<{
+    code: number;
+    data?: any;
+    msg?: string;
+  }> {
+    const query = new URLSearchParams({ userId }).toString();
+    return this.request(`/app/user/selectUserById?${query}`, {
+      method: 'GET',
+    });
+  }
+
+  async getUserMoney(): Promise<{
+    code: number;
+    data?: { money?: number };
+    msg?: string;
+  }> {
+    return this.request('/app/userMoney/selectMyMoney', {
+      method: 'GET',
+    });
+  }
+
+  async getIsVip(): Promise<{
+    code: number;
+    data?: boolean;
+    msg?: string;
+  }> {
+    return this.request('/app/UserVip/isUserVip', {
+      method: 'GET',
+    });
+  }
+
+  async getSubAccounts(): Promise<{
+    code: number;
+    data?: any[];
+    msg?: string;
+  }> {
+    return this.request('/app/sysUserUser/selectList', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+    });
   }
 
   async updateUserInfo(data: any): Promise<{ user: any }> {
