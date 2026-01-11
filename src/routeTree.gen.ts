@@ -13,6 +13,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as MingshuRouteImport } from './routes/mingshu'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MingshuIndexRouteImport } from './routes/mingshu/index'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -34,38 +35,45 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MingshuIndexRoute = MingshuIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MingshuRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/mingshu': typeof MingshuRoute
+  '/mingshu': typeof MingshuRouteWithChildren
   '/register': typeof RegisterRoute
+  '/mingshu/': typeof MingshuIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/mingshu': typeof MingshuRoute
   '/register': typeof RegisterRoute
+  '/mingshu': typeof MingshuIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/mingshu': typeof MingshuRoute
+  '/mingshu': typeof MingshuRouteWithChildren
   '/register': typeof RegisterRoute
+  '/mingshu/': typeof MingshuIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/mingshu' | '/register'
+  fullPaths: '/' | '/login' | '/mingshu' | '/register' | '/mingshu/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/mingshu' | '/register'
-  id: '__root__' | '/' | '/login' | '/mingshu' | '/register'
+  to: '/' | '/login' | '/register' | '/mingshu'
+  id: '__root__' | '/' | '/login' | '/mingshu' | '/register' | '/mingshu/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
-  MingshuRoute: typeof MingshuRoute
+  MingshuRoute: typeof MingshuRouteWithChildren
   RegisterRoute: typeof RegisterRoute
 }
 
@@ -99,13 +107,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mingshu/': {
+      id: '/mingshu/'
+      path: '/'
+      fullPath: '/mingshu/'
+      preLoaderRoute: typeof MingshuIndexRouteImport
+      parentRoute: typeof MingshuRoute
+    }
   }
 }
+
+interface MingshuRouteChildren {
+  MingshuIndexRoute: typeof MingshuIndexRoute
+}
+
+const MingshuRouteChildren: MingshuRouteChildren = {
+  MingshuIndexRoute: MingshuIndexRoute,
+}
+
+const MingshuRouteWithChildren =
+  MingshuRoute._addFileChildren(MingshuRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
-  MingshuRoute: MingshuRoute,
+  MingshuRoute: MingshuRouteWithChildren,
   RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport

@@ -1,5 +1,6 @@
 import { toast } from 'sonner';
 import { clearAuth, isTokenValid } from '@/utils/auth';
+import { useNavigate } from '@tanstack/react-router';
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
@@ -38,10 +39,13 @@ const handleAuthExpired = () => {
   isRedirecting = true;
   clearAuth();
   toast('登录已过期，请重新登录');
+  const navigate = useNavigate();
 
   if (typeof window !== 'undefined') {
     window.setTimeout(() => {
-      window.location.assign('/login');
+      navigate({
+        to: '/login',
+      });
     }, 1500);
   }
 };
@@ -86,10 +90,7 @@ class ApiService {
     return params.toString();
   }
 
-  private buildHeaders(
-    endpoint: string,
-    initHeaders?: HeadersInit
-  ): Headers {
+  private buildHeaders(endpoint: string, initHeaders?: HeadersInit): Headers {
     const headers = new Headers(initHeaders);
 
     if (!headers.has('Content-Type')) {
@@ -266,6 +267,39 @@ class ApiService {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
+    });
+  }
+
+  async createSubAccount(data: {
+    phone: string;
+    password: string;
+  }): Promise<{ code: number; data?: any; msg?: string }> {
+    const body = this.toFormBody(data);
+
+    return this.request('/app/sysUserUser/createZH', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      body,
+    });
+  }
+
+  async switchSubAccount(userId: string): Promise<{
+    code: number;
+    token?: string;
+    user?: any;
+    expire?: number;
+    msg?: string;
+  }> {
+    const body = this.toFormBody({ userId });
+
+    return this.request('/app/user/switchover', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      body,
     });
   }
 

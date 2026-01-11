@@ -1,49 +1,92 @@
-import addUserIcon from '@/assets/images/新增用户.png'
-import bgActiveIcon from '@/assets/images/bg_active.png'
-import bgIcon from '@/assets/images/bg2.png'
-import iconCloum from '@/assets/images/icon_cloum.png'
-import itemActiveIcon from '@/assets/images/item_active.png'
-import lIcon from '@/assets/images/L.png'
-import msActiveIcon from '@/assets/images/ms_active.png'
-import msIcon from '@/assets/images/ms2.png'
-import touxiangIcon from '@/assets/images/touxiang.png'
-import xingIcon from '@/assets/images/xing.png'
-import ygActiveIcon from '@/assets/images/yg_active.png'
-import ygIcon from '@/assets/images/yg2.png'
-import { useStore } from '@tanstack/react-store'
-import { navigationActions, navigationStore } from '../../stores/navigationStore'
-import type { MenuType } from '../../stores/navigationStore'
-import { modalActions } from '../../stores/modalStore'
-import { userStore } from '../../stores/userStore'
+import addUserIcon from '@/assets/images/新增用户.png';
+import bgActiveIcon from '@/assets/images/bg_active.png';
+import bgIcon from '@/assets/images/bg2.png';
+import iconCloum from '@/assets/images/icon_cloum.png';
+import itemActiveIcon from '@/assets/images/item_active.png';
+import lIcon from '@/assets/images/L.png';
+import msActiveIcon from '@/assets/images/ms_active.png';
+import msIcon from '@/assets/images/ms2.png';
+import touxiangIcon from '@/assets/images/touxiang.png';
+import xingIcon from '@/assets/images/xing.png';
+import ygActiveIcon from '@/assets/images/yg_active.png';
+import ygIcon from '@/assets/images/yg2.png';
+import { useStore } from '@tanstack/react-store';
+import { toast } from 'sonner';
+import {
+  navigationActions,
+  navigationStore,
+} from '../../stores/navigationStore';
+import type { MenuType } from '../../stores/navigationStore';
+import { modalActions } from '../../stores/modalStore';
+import { userActions, userStore } from '../../stores/userStore';
+import type { SubAccount } from '../../stores/userStore';
+import { apiService } from '../../services/api';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function MingShuSidebar() {
-  const userState = useStore(userStore)
-  const navState = useStore(navigationStore)
+  const navigate = useNavigate();
+  const userState = useStore(userStore);
+  const navState = useStore(navigationStore);
 
   const switchMenu = (menu: MenuType) => {
-    navigationActions.setActiveMenu(menu)
-  }
+    navigationActions.setActiveMenu(menu);
+  };
 
   const showAddSubAccount = () => {
-    modalActions.showAddSubAccount()
-  }
+    modalActions.showAddSubAccount();
+  };
 
   const showMyVip = () => {
-    modalActions.showMemberPage()
-  }
+    modalActions.showMemberPage();
+  };
+
+  const switchSubAccount = async (account: SubAccount) => {
+    const userId = account.user?.userId;
+    if (!userId) {
+      toast('子账号缺少用户信息');
+      return;
+    }
+
+    try {
+      const result = await apiService.switchSubAccount(String(userId));
+
+      if (result.code !== 0) {
+        toast(result.msg || '切换失败');
+        return;
+      }
+
+      localStorage.removeItem('token');
+      localStorage.removeItem('TOKEN_EXPIRE_TIME');
+      localStorage.removeItem('user');
+
+      const { token, user, expire } = result;
+      if (!token) {
+        toast('登录异常：缺少 token');
+        return;
+      }
+
+      const expireTime = Date.now() + (expire || 2592000) * 1000;
+      localStorage.setItem('token', token);
+      localStorage.setItem('TOKEN_EXPIRE_TIME', expireTime.toString());
+      localStorage.setItem('user', JSON.stringify(user));
+      userActions.login(user);
+
+      toast('切换成功');
+      navigate({
+        to: '/mingshu',
+      });
+    } catch (error) {
+      console.error('切换子账号失败:', error);
+      toast('网络错误，请稍后重试');
+    }
+  };
 
   return (
-    <div
-      className="flex w-[200px] flex-col bg-white px-[19px] py-[20px] shadow-[2px_0_10px_rgba(0,0,0,0.05)]"
-    >
+    <div className="flex w-[200px] flex-col bg-white px-[19px] py-[20px] shadow-[2px_0_10px_rgba(0,0,0,0.05)]">
       {/* 用户信息区域 */}
       <div className="mb-[7px] flex flex-col items-center text-center">
         <div className="mb-[20px] flex justify-center">
-          <img
-            src={iconCloum}
-            alt="logo"
-            className="h-[78px] w-[30px]"
-          />
+          <img src={iconCloum} alt="logo" className="h-[78px] w-[30px]" />
         </div>
 
         <div className="mb-[18px] h-px w-full bg-[#f3f4f6]" />
@@ -56,9 +99,7 @@ export default function MingShuSidebar() {
               alt="avatar"
               className="mr-[5px] h-[24px] w-[24px] rounded-full object-cover"
             />
-            <div
-              className="text-[14px] font-bold text-[#333]"
-            >
+            <div className="text-[14px] font-bold text-[#333]">
               {userState.userInfo?.userName || '普通用户'}
             </div>
           </div>
@@ -67,18 +108,14 @@ export default function MingShuSidebar() {
 
         {/* 子账号列表 */}
         {userState.subAccounts.length > 0 && (
-          <div
-            className="mt-[12px] max-h-[200px] w-full overflow-y-auto rounded-[8px]"
-          >
+          <div className="mt-[12px] max-h-[200px] w-full overflow-y-auto rounded-[8px]">
             {userState.subAccounts.map((item, index) => (
               <div
                 key={item.user.userId ?? item.user.userName ?? `sub-${index}`}
+                onClick={() => switchSubAccount(item)}
                 className="mx-auto mb-[10px] flex w-[70%] cursor-pointer items-center"
               >
-                <img
-                  src={lIcon}
-                  className="w-[14px]"
-                />
+                <img src={lIcon} className="w-[14px]" />
                 <img
                   src={item.user.avatar || touxiangIcon}
                   className="mx-[8px] h-[14px] w-[14px] rounded-full"
@@ -96,31 +133,34 @@ export default function MingShuSidebar() {
           onClick={showAddSubAccount}
           className="mt-[12px] flex cursor-pointer items-center text-[12px] text-[#666]"
         >
-          <img
-            src={addUserIcon}
-            className="mr-[5px] h-[15px] w-[15px]"
-          />
+          <img src={addUserIcon} className="mr-[5px] h-[15px] w-[15px]" />
           新增用户
         </div>
       </div>
 
-      <div
-        className="mb-[18px] h-px w-full bg-[#f3f4f6]"
-      />
+      <div className="mb-[18px] h-px w-full bg-[#f3f4f6]" />
 
       {/* 菜单列表 */}
       <div className="mb-[20px] flex flex-col items-center">
         {[
           { key: '命书', icon: msIcon, activeIcon: msActiveIcon },
           { key: '运阁', icon: ygIcon, activeIcon: ygActiveIcon },
-          { key: '宝阁', icon: bgIcon, activeIcon: bgActiveIcon }
+          { key: '宝阁', icon: bgIcon, activeIcon: bgActiveIcon },
         ].map((menu) => {
-          const isActive = navState.activeMenu === menu.key
+          const isActive = navState.activeMenu === menu.key;
           return (
             <div
               key={menu.key}
               onClick={() => switchMenu(menu.key as MenuType)}
-              style={isActive ? { backgroundImage: `url(${itemActiveIcon})`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' } : undefined}
+              style={
+                isActive
+                  ? {
+                      backgroundImage: `url(${itemActiveIcon})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: '100% 100%',
+                    }
+                  : undefined
+              }
               className="mb-[5px] flex h-[50px] w-[140px] cursor-pointer items-center justify-center rounded-[8px]"
             >
               <img
@@ -133,7 +173,7 @@ export default function MingShuSidebar() {
                 {menu.key}
               </span>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -142,14 +182,11 @@ export default function MingShuSidebar() {
         onClick={showMyVip}
         className="mb-[20px] cursor-pointer rounded-[9px] bg-[#f9fafb] p-[10px]"
       >
-        <div
-          className="flex items-center justify-center"
-        >
-          <img
-            src={xingIcon}
-            className="mr-[10px] h-[18px] w-[18px]"
-          />
-          <span className="text-[16px] font-medium text-[#000]">{userState.money}</span>
+        <div className="flex items-center justify-center">
+          <img src={xingIcon} className="mr-[10px] h-[18px] w-[18px]" />
+          <span className="text-[16px] font-medium text-[#000]">
+            {userState.money}
+          </span>
         </div>
         <div className="mt-[5px] text-center text-[12px] font-normal text-[#9da2ae]">
           我的会员
@@ -166,5 +203,5 @@ export default function MingShuSidebar() {
         </button>
       </div>
     </div>
-  )
+  );
 }
