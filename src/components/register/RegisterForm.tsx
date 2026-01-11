@@ -1,30 +1,73 @@
 import React from 'react';
+import { useStore } from '@tanstack/react-store';
+import { useNavigate } from '@tanstack/react-router';
+import { toast } from 'sonner';
+import { registerStore, registerActions, userActions } from '@/stores';
+import { apiService } from '@/services/api';
 import AuthCode from '@/components/login/AuthCode';
 
-interface RegisterFormProps {
-  phone: string;
-  verifyCode: string;
-  password: string;
-  loading: boolean;
-  onPhoneChange: (value: string) => void;
-  onVerifyCodeChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
-}
+export function RegisterForm() {
+  const navigate = useNavigate();
+  const { registerForm, loading } = useStore(registerStore);
 
-export function RegisterForm({
-  phone,
-  verifyCode,
-  password,
-  loading,
-  onPhoneChange,
-  onVerifyCodeChange,
-  onPasswordChange,
-  onSubmit,
-}: RegisterFormProps) {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const phoneReg = /^1[3-9]\d{9}$/;
+    if (!registerForm.phone) {
+      toast('请输入手机号');
+      return;
+    }
+    if (!phoneReg.test(registerForm.phone)) {
+      toast('手机号格式不正确');
+      return;
+    }
+    if (!registerForm.msg) {
+      toast('请输入验证码');
+      return;
+    }
+    if (!registerForm.password) {
+      toast('请输入密码');
+      return;
+    }
+
+    try {
+      registerActions.setLoading(true);
+      localStorage.removeItem('token');
+      localStorage.removeItem('TOKEN_EXPIRE_TIME');
+      localStorage.removeItem('user');
+
+      const result = await apiService.registerCode(registerForm);
+
+      if (result.code === 0) {
+        const { token, user, expire } = result;
+        if (!token) {
+          toast('注册异常：缺少 token');
+          return;
+        }
+
+        const expireTime = Date.now() + (expire || 2592000) * 1000;
+        localStorage.setItem('token', token);
+        localStorage.setItem('TOKEN_EXPIRE_TIME', expireTime.toString());
+        localStorage.setItem('user', JSON.stringify(user));
+
+        toast('注册成功');
+        userActions.login(user);
+        navigate({ to: '/mingshu' });
+      } else {
+        toast(result.msg || '注册失败');
+      }
+    } catch (error) {
+      console.error('注册异常:', error);
+      toast('网络错误，请稍后重试');
+    } finally {
+      registerActions.setLoading(false);
+    }
+  };
+
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       className="mx-auto w-[488px] bg-white p-7 shadow-sm rounded-xl"
     >
       <div className="font-medium text-lg text-black mb-5">账号注册</div>
@@ -38,8 +81,10 @@ export function RegisterForm({
           </span>
           <input
             type="number"
-            value={phone}
-            onChange={(e) => onPhoneChange(e.target.value)}
+            value={registerForm.phone}
+            onChange={(e) =>
+              registerActions.updateForm('phone', e.target.value)
+            }
             placeholder="手机号"
             maxLength={11}
             className="w-full h-[54px] pl-[83px] pr-4 border border-gray-300 rounded-lg text-sm bg-white"
@@ -52,17 +97,15 @@ export function RegisterForm({
         <div className="font-medium text-base text-black mb-4">验证码</div>
         <div className="flex">
           <input
-            value={verifyCode}
-            onChange={(e) => onVerifyCodeChange(e.target.value)}
+            value={registerForm.msg}
+            onChange={(e) =>
+              registerActions.updateForm('msg', e.target.value)
+            }
             placeholder="验证码"
             className="w-[70%] h-[54px] mr-2.5 px-4 border border-gray-300 rounded-lg text-sm bg-white"
           />
           <div className="w-[28%] h-[54px] leading-[54px] text-center bg-gray-50 rounded-lg border border-gray-300">
-            <AuthCode
-              phone={phone}
-              value={verifyCode}
-              onChange={onVerifyCodeChange}
-            />
+            <AuthCode phone={registerForm.phone} />
           </div>
         </div>
       </div>
@@ -72,8 +115,10 @@ export function RegisterForm({
         <div className="font-medium text-base text-black mb-4">密码</div>
         <input
           type="password"
-          value={password}
-          onChange={(e) => onPasswordChange(e.target.value)}
+          value={registerForm.password}
+          onChange={(e) =>
+            registerActions.updateForm('password', e.target.value)
+          }
           placeholder="请设置密码"
           className="w-full h-[54px] px-4 border border-gray-300 rounded-lg text-sm bg-white"
         />

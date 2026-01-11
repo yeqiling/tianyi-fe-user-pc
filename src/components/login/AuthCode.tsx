@@ -4,8 +4,6 @@ import { apiService } from '@/services/api.ts';
 
 interface AuthCodeProps {
   phone: string;
-  value: string;
-  onChange: (value: string) => void;
 }
 
 export function AuthCode({ phone }: AuthCodeProps) {

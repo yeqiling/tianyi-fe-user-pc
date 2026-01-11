@@ -15,21 +15,27 @@ export interface LoginState {
   loginForm: LoginForm;
   forgetPwdForm: ForgetPwdForm;
   passwordModelShow: boolean;
-  loading: boolean;
+  loginLoading: boolean;
+  resetLoading: boolean;
 }
 
+const createLoginForm = (): LoginForm => ({
+  phone: '',
+  password: '',
+});
+
+const createForgetPwdForm = (): ForgetPwdForm => ({
+  phone: '',
+  password: '',
+  verifyCode: '',
+});
+
 export const loginStore = new Store<LoginState>({
-  loginForm: {
-    phone: '',
-    password: '',
-  },
-  forgetPwdForm: {
-    phone: '',
-    password: '',
-    verifyCode: '',
-  },
+  loginForm: createLoginForm(),
+  forgetPwdForm: createForgetPwdForm(),
   passwordModelShow: false,
-  loading: false,
+  loginLoading: false,
+  resetLoading: false,
 });
 
 export const loginActions = {
@@ -47,24 +53,37 @@ export const loginActions = {
     }));
   },
 
-  resetForm: () => {
+  resetLoginForm: () => {
     loginStore.setState((state) => ({
       ...state,
-      loginForm: { phone: '', msg: '', password: '' },
+      loginForm: createLoginForm(),
+    }));
+  },
+
+  resetForgetPwdForm: () => {
+    loginStore.setState((state) => ({
+      ...state,
+      forgetPwdForm: createForgetPwdForm(),
     }));
   },
 
   showPasswordModal: () => {
-    loginActions.resetForm();
-    loginStore.setState((state) => ({ ...state, passwordModelShow: true }));
+    loginStore.setState((state) => ({
+      ...state,
+      passwordModelShow: true,
+      forgetPwdForm: createForgetPwdForm(),
+    }));
   },
 
   hidePasswordModal: () => {
-    loginActions.resetForm();
     loginStore.setState((state) => ({ ...state, passwordModelShow: false }));
   },
 
-  setLoading: (loading: boolean) => {
-    loginStore.setState((state) => ({ ...state, loading }));
+  setLoginLoading: (loading: boolean) => {
+    loginStore.setState((state) => ({ ...state, loginLoading: loading }));
+  },
+
+  setResetLoading: (loading: boolean) => {
+    loginStore.setState((state) => ({ ...state, resetLoading: loading }));
   },
 };

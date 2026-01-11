@@ -1,10 +1,7 @@
 import { Link } from '@tanstack/react-router';
+import { loginActions } from '@/stores';
 
-interface LoginFooterProps {
-  onForgotPassword: () => void;
-}
-
-export function LoginFooter({ onForgotPassword }: LoginFooterProps) {
+export function LoginFooter() {
   return (
     <>
       {/* 注册与忘记密码链接 */}
@@ -18,7 +15,10 @@ export function LoginFooter({ onForgotPassword }: LoginFooterProps) {
             立即注册
           </Link>
         </div>
-        <span onClick={onForgotPassword} className="cursor-pointer underline">
+        <span
+          onClick={loginActions.showPasswordModal}
+          className="cursor-pointer underline"
+        >
           忘记密码？
         </span>
       </div>

@@ -7,9 +7,9 @@ export function RegisterFooter() {
       <div className="mx-auto w-[488px] flex items-center justify-center text-[13px] text-slate-600 mt-6">
         <div>
           已有账号？
-          <a href="/login" className="text-blue-600 cursor-pointer underline">
+          <Link to="/login" className="text-blue-600 cursor-pointer underline">
             立即登录
-          </a>
+          </Link>
         </div>
       </div>
 
